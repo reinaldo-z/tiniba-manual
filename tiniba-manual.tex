@@ -223,7 +223,7 @@ and so on for the other nodes $\ldots$
 You can check if the mounting is correct with:
 \textcolor{darkgreen}{checkMountQuads.sh} 
 
-\section{How to run a TINIBA$^{\reg}$ test case}
+\section{How to run a TINIBA test case}
 
 CODE:
 
@@ -651,17 +651,16 @@ For an example copy from \verb=$TINIBA/examples/surface/nospin/si_as_6=:\\
 Si(111)$1\times 1$:As surface with 4 layers of Si, one top and one bottom
 layer of As. See results in \verb=si_as_6/res= and Fig.~\ref{shg-surface}.
 
-\section{For developers : how to include a new optics subroutine}
-The optical response is calculated in two steps:\\
+
+\section{For developers: how to include new optics subroutines}
+Optical responses are calculated in two steps:
+
 \begin{enumerate}
 \item The calcualtion of integrand.
 \item The integration over $k$.
 \end{enumerate}
-Both subrutines are implemented in Fortran code (thanks to Fred Nastos) and both 
-are in TINIBA$^\reg$ package. In order to include another subrutine we are going to 
-modificate only the 
-\emph{integrand}. If this not make sense, you have to read a famous paper 
-PRB 61 5337 of John Sipe and  Anatoli Shkrebtii. 
+
+Both subroutines are implemented in Fortran code (thanks to Fred Nastos) and both are included with TINIBA. Including another subroutine only requires modifying the \emph{integrand}. For more information see \cite{sipe_second-order_2000}.
  
 Suppose that you want to add another subroutine, follows these step:\\ 
 (use any editor that you want)\\
@@ -1496,11 +1495,12 @@ to be continued$\ldots$
 
 LAST MODIFICATION: by BMS on \date{\today }
 
+\bibliographystyle{plain}
+\bibliography{tiniba}
+
 \appendix
 
 \section{Extras}
-
-
 \begin{enumerate}
 %
 \item Compiling IBZ: executable \verb=ibz.medusa= or \verb=ibz.quad=
@@ -1553,7 +1553,7 @@ w l lw 2
 
 \begin{figure}[t]
 \begin{center}
-\includegraphics[scale=0.6]{../tiniba_shells-indautor/CERTIFICADO-INDAUTOR-TINIBA1}
+\includegraphics[scale=0.6]{CERTIFICADO-INDAUTOR-TINIBA1}
 \end{center}
 \caption{INDAUTOR Certificate of TINIBA$^{\reg}$ 
 }
