@@ -1,20 +1,15 @@
-\documentclass[12pt,leqno]{article}
-%% JL Cabellos at agosto 2010
+\documentclass[openany]{book}
 \usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
 \usepackage{graphics}                 % Packages to allow inclusion
 \usepackage{color}
-\usepackage[spanish,english]{babel}
 \usepackage{verbatim}
 \usepackage{graphicx}
-%\selectlanguage{english}
-\selectlanguage{spanish}
 \input{/Users/bms/util/definitions}
 %%%
 \def\ver{2.0}
 \def\reg{\textsuperscript{\textregistered}}
 %%%
 \def\runcual{RUN}
-\spanishdecimal{.}
 % \usepackage[pdftex,colorlinks=true,
 %                       pdfpagemode=UseOutlines,
 %                       pdfstartview=FitV,
@@ -104,13 +99,12 @@ Superficies''
                         
 \begin{document}
 %\fancyfoot[C]{\thepage}
-\selectlanguage{spanish}                        
 \maketitle
 \tableofcontents
 
 
 \newpage
-\section{Introduction}
+\chapter{Introduction}
 
 \emph{WARNING:}
 First of all here we adopt the philosophy \emph{{\bf{TINIBA$^\reg$ is
@@ -223,7 +217,7 @@ and so on for the other nodes $\ldots$
 You can check if the mounting is correct with:
 \textcolor{darkgreen}{checkMountQuads.sh} 
 
-\section{How to run a TINIBA test case}
+\chapter{How to run a TINIBA test case}
 
 CODE:
 
@@ -620,7 +614,7 @@ Cartesian components of $\zeta_{ijk}$. Also,
 
 \end{itemize}
 
-\section{Examples}
+\chapter{Examples}
 \subsection{Bulk} 
 For an example copy from \verb=$TINIBA/examples/surface/nospin/gaas=:\\
 \verb=setUpAbinit_gaas.in= and \verb=gaas.xyz=. This is a
@@ -652,7 +646,7 @@ Si(111)$1\times 1$:As surface with 4 layers of Si, one top and one bottom
 layer of As. See results in \verb=si_as_6/res= and Fig.~\ref{shg-surface}.
 
 
-\section{For developers: how to include new optics subroutines}
+\chapter{For developers: how to include new optics subroutines}
 Optical responses are calculated in two steps:
 
 \begin{enumerate}
@@ -1471,7 +1465,7 @@ to be done
 
 
 \section{Contributors}
-This list of contributors is not completee, if there are others let us know
+This list of contributors is not complete, if there are others let us know
 \begin{itemize}
 \item Bernardo Mendoza
 \item JL Cabellos
@@ -1482,16 +1476,8 @@ This list of contributors is not completee, if there are others let us know
 \item Fred Nastos  
 \end{itemize}
 
-to be continued$\ldots$
-
-LAST MODIFICATION: by BMS on \date{\today }
-
-\bibliographystyle{plain}
-\bibliography{tiniba}
-
 \appendix
-
-\section{Extras}
+\chapter{Extras}
 \begin{enumerate}
 %
 \item Compiling IBZ: executable \verb=ibz.medusa= or \verb=ibz.quad=
@@ -1551,44 +1537,47 @@ w l lw 2
 \label{inpi}
 \end{figure}
 
+\bibliographystyle{plain}
+\bibliography{tiniba}
+
 \end{document}                          % The required last line
 
 %%%%% usless for DSP below
 
-\item  Using \verb=chose_layers.sh= select the following layers: 
-\begin{enumerate}
-\item front-layer $\to\ell=$\verb=1=
-\item back-layer $\to\ell=$\verb=N=
-\item middle-layer $\to\ell=$\verb=middle=
-\item half-slab $\to\ell=$\verb=half-slab= (by default is the {\it
-   front} half-slab)\\
-then run \verb=run_tiniba.sh= with option \verb=-N 4=
-\item[and]
-\item full-slab: 
-run \verb=run_tiniba.sh= with option \verb=-N 0=
-\end{enumerate}
-
-\item Then, the different responses are given by:
-\begin{eqnarray}\label{surfj}
-\tilde\chi^{\mathrm{front-surface}}
-&=&
-\chi^{\mathrm{half-slab}}-\ell_B
-\chi^{\mathrm{middle}}\nonumber
-\\
-\tilde\chi^{\mathrm{back-surface}}
-&=&
-\underbrace{\left(\chi^{\mathrm{full-slab}}-
-\chi^{\mathrm{half-slab}}
-\right)}_{\mathrm{back-surface}}
--\ell_B
-\chi^{\mathrm{middle}}
-\nonumber
-,
-\end{eqnarray}   
-with $\ell_B$ the integer value of the middle layer. Also
-$\tilde\chi^i=\left(A/\gO\right)\chi^j$ 
-and
-$\chi^j$ is $\zeta^{j,\rma\rmb\rmc}$ or
-$\xi^{j,\rmb\rmc}$, with $i=$front-surface or back-surface and
-$j=$full-slab, half-slab or middle.
-%%%%% usless for DSP above
+%\item  Using \verb=chose_layers.sh= select the following layers: 
+%\begin{enumerate}
+%\item front-layer $\to\ell=$\verb=1=
+%\item back-layer $\to\ell=$\verb=N=
+%\item middle-layer $\to\ell=$\verb=middle=
+%\item half-slab $\to\ell=$\verb=half-slab= (by default is the {\it
+%   front} half-slab)\\
+%then run \verb=run_tiniba.sh= with option \verb=-N 4=
+%\item[and]
+%\item full-slab: 
+%run \verb=run_tiniba.sh= with option \verb=-N 0=
+%\end{enumerate}
+%
+%\item Then, the different responses are given by:
+%\begin{eqnarray}\label{surfj}
+%\tilde\chi^{\mathrm{front-surface}}
+%&=&
+%\chi^{\mathrm{half-slab}}-\ell_B
+%\chi^{\mathrm{middle}}\nonumber
+%\\
+%\tilde\chi^{\mathrm{back-surface}}
+%&=&
+%\underbrace{\left(\chi^{\mathrm{full-slab}}-
+%\chi^{\mathrm{half-slab}}
+%\right)}_{\mathrm{back-surface}}
+%-\ell_B
+%\chi^{\mathrm{middle}}
+%\nonumber
+%,
+%\end{eqnarray}   
+%with $\ell_B$ the integer value of the middle layer. Also
+%$\tilde\chi^i=\left(A/\gO\right)\chi^j$ 
+%and
+%$\chi^j$ is $\zeta^{j,\rma\rmb\rmc}$ or
+%$\xi^{j,\rmb\rmc}$, with $i=$front-surface or back-surface and
+%$j=$full-slab, half-slab or middle.
+%%%%%% usless for DSP above
