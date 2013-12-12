@@ -656,24 +656,15 @@ layer of As. See results in \verb=si_as_6/res= and Fig.~\ref{shg-surface}.
 Optical responses are calculated in two steps:
 
 \begin{enumerate}
-\item The calcualtion of integrand.
-\item The integration over $k$.
+\item the calcualtion of the integrand,
+\item and the integration over $k$.
 \end{enumerate}
 
 Both subroutines are implemented in Fortran code (thanks to Fred Nastos) and both are included with TINIBA. Including another subroutine only requires modifying the \emph{integrand}. For more information see \cite{sipe_second-order_2000}.
- 
-Suppose that you want to add another subroutine, follows these step:\\ 
-(use any editor that you want)\\
 
 \subsection{a la Cabellos}
 
-This subsection only runs $\chi_{ij}(\omega)$
-and $\chi_{ijk}(2\omega)$ for bulk semiconductors. It assumes that the
-experimental or {\it GW} band gap is known, like in GaAs.
-We are planing to extend this version to other responses and the {\it
-  layer-by-layer } analysis as well. $\chi_{ijk}(2\omega)$ is
-calculated in the length-gauge  and in the velocity-gauge both wrongly
-and correctly scissored. See Cabellos et al., Phys.  Rev. B {\bf 80}, 155205-1-13 (2009).
+This subsection only runs $\chi_{ij}(\omega)$ and $\chi_{ijk}(2\omega)$ for bulk semiconductors. It assumes that the experimental or GW band gap is known. We are planing to extend this version to other responses and the layer-by-layer analysis as well. $\chi_{ijk}(2\omega)$ is calculated in the length and velocity gauges with and without the appropriate scissor correction. See \cite{cabellos_effects_2009} for more information.
 
 \begin{itemize}
 \item go to:\\
