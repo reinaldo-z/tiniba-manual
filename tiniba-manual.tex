@@ -24,7 +24,7 @@
 \parskip10pt                          % make block paragraphs
 %\raggedright                         % do not right justify
 \definecolor{myred}{rgb}{.3,.7,.7}
-\DeclareFixedFont{\xviisfb}{OT1}{cmss}{m}{n}{15}
+%\DeclareFixedFont{\xviisfb}{OT1}{cmss}{m}{n}{15}
 \DeclareFixedFont{\cabellos}{OT1}{cmss}{m}{n}{11}
 \DeclareFixedFont{\viiisf}{OT1}{cmss}{m}{n}{7}
 \def\cual{lightblue}
@@ -39,15 +39,15 @@
  \definecolor{lightgray}{gray}{.75}
 %%%%%%%%%%%%%%%%%555
 %%%%%%%%%%%%%%%%%%%%
-\usepackage{fancyhdr}
-\pagestyle{fancy}
-\fancyhf{}
+%\usepackage{fancyhdr}
+%\pagestyle{fancy}
+%\fancyhf{}
 %\fancyhead[LC]{\thepage}
 %\fancyhead[LR]{\thepage} %%% pon the page number en el lado derecho
 
 %\textwidth 16cm 
 
-\lhead{\href{http://aida.cio.mx}{\cabellos{Tiniba: the tutorials}}}
+%\lhead{\href{http://aida.cio.mx}{\cabellos{Tiniba: the tutorials}}}
 
 \title{
 \vspace{-50pt}
@@ -114,15 +114,15 @@ and the other thing that you have to know GNU\/Linux at basic level,
 understand something  scripting under bash and perl, 
 and enjoy tiniba.   
   
-\subsection{Why this guide?}
+\section{Why this guide?}
 In order to improve the calculations faster and easier. 
 
-\subsection{Publications with tiniba}
+\section{Publications with tiniba}
  A list of publications that used TINIBA$^\reg$ package:\\
  1.- Phys. Rev. B 80, 201312 (2009) \\  
  2.- Phys. Rev. B 80, 245204 (2009) \\ 
 
-\subsection{At the begining}
+\section{At the begining}
 The propouse of this toutorials is teaching the use of TINIBA$^\reg$ 
 on \href{http://aida.cio.mx/medusaPhotos/medusaPhoto2.jpg} {\emph{Medusa}}.\\ 
 Before you follow this tutorials you need to talk  Dr. Bernardo.  
@@ -614,7 +614,7 @@ Cartesian components of $\zeta_{ijk}$. Also,
 
 \end{itemize}
 
-\subsection{Formulas and Units}
+\section{Formulas and Units}
 
 
 These are the formulas coded:
@@ -982,7 +982,7 @@ Are given in \verb=cgs= and \verb=mks= units in\\
 \end{itemize}
 
 \chapter{Examples}
-\subsection{Bulk} 
+\section{Bulk} 
 For an example copy from \verb=$TINIBA/examples/surface/nospin/gaas=:\\
 \verb=setUpAbinit_gaas.in= and \verb=gaas.xyz=. This is a
 bulk GaAs crystal. See results in \verb=gaas/res= and Fig.~\ref{shg-bulk}.
@@ -1023,7 +1023,7 @@ Optical responses are calculated in two steps:
 
 Both subroutines are implemented in Fortran code (thanks to Fred Nastos) and both are included with TINIBA. Including another subroutine only requires modifying the \emph{integrand}. For more information see \cite{sipe_second-order_2000}.
 
-\subsection{a la Cabellos}
+\section{a la Cabellos}
 
 This subsection only runs $\chi_{ij}(\omega)$ and $\chi_{ijk}(2\omega)$ for bulk semiconductors. It assumes that the experimental or GW band gap is known. We are planing to extend this version to other responses and the layer-by-layer analysis as well. $\chi_{ijk}(2\omega)$ is calculated in the length and velocity gauges with and without the appropriate scissor correction. See \cite{cabellos_effects_2009} for more information.
 
@@ -1130,7 +1130,7 @@ In order to be able to run, try it with small case.
 if you are not able to run ask to Bernardo en the coffe 
 break in order to solve the problem. 
 
-\subsection{Programs for Bulk and Layer-by-Layer response}
+\section{Programs for Bulk and Layer-by-Layer response}
 \label{sec:programs}
 
 Do all the compilation in the \verb=master= node and in both 
@@ -1351,7 +1351,7 @@ of the displayed text.
 \end{itemize}
 
 
-\subsection{Shell for Bulk and Layer-by-Layer response}
+\section{Shell for Bulk and Layer-by-Layer response}
 
 \begin{itemize}
 
