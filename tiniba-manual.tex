@@ -4,20 +4,12 @@
 \usepackage{color}
 \usepackage{verbatim}
 \usepackage{graphicx}
+\usepackage[backref,pdffitwindow,colorlinks,linkcolor={blue}]{hyperref}
 \input{definitions}
-%%%
+
 \def\ver{2.0}
 \def\reg{\textsuperscript{\textregistered}}
-%%%
 \def\runcual{RUN}
-% \usepackage[pdftex,colorlinks=true,
-%                       pdfpagemode=UseOutlines,
-%                       pdfstartview=FitV,
-%                       linkcolor=blue,
-%                       citecolor=blue,
-%                       urlcolor=blue,
-%           ]{hyperref}
-\usepackage[backref,pdffitwindow,colorlinks,linkcolor={blue}]{hyperref}
 
 \numberwithin{equation}{section}
 \parindent10pt  
@@ -37,8 +29,7 @@
  \definecolor{orange}{rgb}{1,.5,0}
  \definecolor{gray}{gray}{.5}  % 0:black   1: white
  \definecolor{lightgray}{gray}{.75}
-%%%%%%%%%%%%%%%%%555
-%%%%%%%%%%%%%%%%%%%%
+
 %\usepackage{fancyhdr}
 %\pagestyle{fancy}
 %\fancyhf{}
@@ -94,8 +85,6 @@ Superficies''
 %\href{http://aida.cio.mx}{PRONASIS}}                   %   
 %\date{\selectlanguage{spanish} \today}
 %\date{\today}
-
-
                         
 \begin{document}
 %\fancyfoot[C]{\thepage}
@@ -103,6 +92,7 @@ Superficies''
 \tableofcontents
 
 \newpage
+\mainmatter
 \include{chapters/introduction}
 \include{chapters/tiniba_test_case}
 \include{chapters/optics}
@@ -112,6 +102,7 @@ Superficies''
 \appendix
 \include{chapters/extras}
 
+\backmatter
 \bibliographystyle{plain}
 \bibliography{tiniba}
 
