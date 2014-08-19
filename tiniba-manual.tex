@@ -4,7 +4,7 @@
 \usepackage{color}
 \usepackage{verbatim}
 \usepackage{graphicx}
-\input{/Users/bms/util/definitions}
+\input{definitions}
 %%%
 \def\ver{2.0}
 \def\reg{\textsuperscript{\textregistered}}
@@ -1013,15 +1013,16 @@ Si(111)$1\times 1$:As surface with 4 layers of Si, one top and one bottom
 layer of As. See results in \verb=si_as_6/res= and Fig.~\ref{shg-surface}.
 
 
-\chapter{For developers: how to include new optics subroutines}
+\chapter{For Developers: Including New Optical Responses}
+
 Optical responses are calculated in two steps:
 
 \begin{enumerate}
-\item the calcualtion of the integrand,
+\item the integrand,
 \item and the integration over $k$.
 \end{enumerate}
 
-Both subroutines are implemented in Fortran code (thanks to Fred Nastos) and both are included with TINIBA. Including another subroutine only requires modifying the \emph{integrand}. For more information see \cite{sipe_second-order_2000}.
+Both steps are implemented in FORTRAN code (thanks to Fred Nastos) and both are included with TINIBA. Including new optical subroutines only requires modifying the \emph{integrand}. For more information see \cite{sipe_second-order_2000}.
 
 \section{a la Cabellos}
 
