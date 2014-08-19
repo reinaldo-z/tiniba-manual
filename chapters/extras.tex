@@ -1,0 +1,59 @@
+\chapter{Extras}
+\begin{enumerate}
+%
+\item Compiling IBZ: executable \verb=ibz.medusa= or \verb=ibz.quad=
+\begin{itemize}
+\item[XEON:] \verb=$$TINIBA$$/src_ibz> make clean -f Makefile_xeon= 
+\verb=$$TINIBA$$/src_ibz> make -f Makefile_xeon= 
+\item[QUAD:]\verb=ssh quad01=
+
+\verb=$$TINIBA$$/src_ibz> make clean -f Makefile_quad= 
+\verb=$$TINIBA$$/src_ibz> make -f Makefile_quad= 
+\end{itemize}
+%
+\item Compiling matrix elements: executable \verb=rpmns.itanium= or
+  \verb=rpmns.quad= or \verb=rpmns.xeon=
+\begin{itemize}
+\item \verb=$TINIBA/matrix_elements/ver3.0> compilerRPMNS.sh=\\
+Follow instructions to compile in the three plataforms.
+\end{itemize}
+%
+\item Old way to calculate Second Order Response (SHG)
+ 
+Here you must to run \textcolor{darkgreen}{responseSHG.sh} with option number 21 and 22 for lenght
+ gauge formalism and 64 and 65 for velocity gauge formalism and you must provide the LDA band gap 
+ in order to calcuate zero scissors correction and you must provide experimental band gap in order to 
+calculate the SHG with scissors correction. The typical value of semar is 0.15 eV, in the case of GaAs 
+ the tensor componet different of zero is xzy.
+when you finish with the \textcolor{darkgreen}{glue.sh} script, if everething is ok, you get  a file
+that contains in the first row energy in eV,  the second one the real part of $1\;\omega$ contribution of lenght, 
+the third one the imaginary part of $1\;\omega$ contribution of lenght,  
+the 4 one the real part of $2\;\omega$ contribution of lenght, 
+the 5 one the imaginary part of $2\;\omega$ contribution of lenght, and the others four rows (6-9)
+contains the SHG for velocity formalism. (6=Re,$1\;\omega$), (7=Im,$1\;\omega$), (8=Re,$2\;\omega$) and 
+(9=Im,$2\;\omega$)\\
+If you want to plot the $|\chi_2^{xyz}|$ for lenght gauge formalism in the case of GaAs, the typical line text in gnuplot is 
+\begin{verbatim}
+p 'shg1l_shg2l_shg1t_shg2t_xxz_sm_0-150_3876_10-
+nospin_32_N_0-849_0-0d0_0-0d0L_0-0d0t_SRC_response'  
+u 1:(sqrt(($2+$4)**2+($3+$5)**2)) smooth csplines title '$\chi^2_{xyz}$'
+w l lw 2
+\end{verbatim}
+
+   
+\begin{itemize}
+\item \verb=$HOME/$TINIBA/SRC_response/=\textcolor{darkgreen}{responseSHG.sh} 
+\item \verb=$HOME/$TINIBA/SRC_response/all/=\textcolor{darkgreen}{doNuevoSmearingt$_{-}$juniot$_{-}$14t$_{-}$2010.sh} 
+\item \verb=$HOME/$TINIBA/1response/=\textcolor{darkgreen}{glue.sh} 
+\end{itemize}
+
+\end{enumerate}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.6]{CERTIFICADO-INDAUTOR-TINIBA1}
+\end{center}
+\caption{INDAUTOR Certificate of TINIBA$^{\reg}$ 
+}
+\label{inpi}
+\end{figure}

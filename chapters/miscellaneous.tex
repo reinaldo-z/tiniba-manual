@@ -1,0 +1,101 @@
+\chapter{Miscellaneous}
+
+\section{Wien2k}
+In general you can use a all electron (wien2k) or pseudopotential 
+(abinit) codes in order to calculate 
+the first and second order response, you can follow the next seteps to 
+achive the result using wien2k code. 
+Now from here the user is going to be: usrname but it could be anybody, then 
+take care of this. 
+\begin{itemize}
+\item /home/usrname/temporal/GAAS/wien2k-GAAS/GAAS >cd ~/temporal/
+\item /home/usrname/temporal >~/\$TINIBA/wien2k/creatingTree.sh GAAS
+\item /home/\$USER/\$TINIBA/wien2k/\textcolor{darkgreen}{creatingTree.sh} 
+\begin{verbatim}
+$HOME/temporal >~/\$TINIBA/wien2k/creatingTree.sh GAAS
+    =====================
+    =====================
+    Making tree to run abinis and wien2k 
+    $HOME/temporal/GAAS/abinit-GAAS/GAAS
+    $HOME/temporal/GAAS/wien2k-GAAS/GAAS
+    =====================
+
+    =====================
+$HOME/temporal/GAAS
+   +---abinit-GAAS
+      |   +---GAAS
+   +---wien2k-GAAS
+      |   +---GAAS
+    =====================
+\end{verbatim}
+
+\item 
+ \begin{verbatim}
+ $HOME/temporal >cd $HOME/temporal/GAAS/wien2k-GAAS/GAAS
+$HOME/temporal/GAAS/wien2k-GAAS/GAAS >
+ \end{verbatim}
+\item /home/\$USER/\$TINIBA/wien2k/\textcolor{darkgreen}{wien2k.sh} 
+\begin{verbatim}
+Usage: 
+    $HOME/\$TINIBA/wien2k/wien2k.sh  [option-0]  [option-1] 
+    [option-0] = scf    -run ONLY scf 
+    [option-0] = klist  -generate rklist
+    [option-0] = run    -run ONLY momentum and energy  matrix elements 
+    [option-0] = help   -example files for si bulk 
+    [option-0] = clean_lapw -remove unnecessary files 
+    [option-0] = whatneed   -what files I need  
+    [option-1] = 0.001      -energy convercence LIMIT (0.0001 Ry)
+    ===================
+    $HOME/\$TINIBA/wien2k/wien2k.sh scf 0.001
+    $HOME/\$TINIBA/wien2k/wien2k.sh klist
+    $HOME/\$TINIBA/wien2k/wien2k.sh run 
+    $HOME/\$TINIBA/wien2k/wien2k.sh clean_lapw
+    $HOME/\$TINIBA/wien2k/wien2k.sh help
+    Stoping right now...  wien2k.sh
+\end{verbatim}
+
+
+
+ 
+\end{itemize}
+\section{Refinement over k-points}
+If you want to refine the density of k-points over one window of energy 
+you can follow this script 
+\begin{itemize}
+ \item /home/\$USER/\$TINIBA/\textcolor{darkgreen}{refine.sh} 
+\begin{verbatim}
+    Usage:
+    $HOME/\$TINIBA/refine.sh abinit first
+    $HOME/\$TINIBA/refine.sh abinit refine noscissors
+    $HOME/\$TINIBA/refine.sh abinit refine scissors
+    Stoping right now...
+    $HOME/\$TINIBA/refine.sh
+    I need input Args
+\end{verbatim}
+
+\end{itemize}
+
+
+\section{The GW method and Bethe-Salpeter Equation}
+to be done 
+%\subsection{Why we have to use GW and BSE}
+
+
+\section{Surfaces }
+\emph{God made solids ...\\
+      but surfaces were the work of the devil}, W. Pauli\\                                  
+%The optics at surfaces 
+
+
+
+\section{Contributors}
+This list of contributors is not complete, if there are others let us know
+\begin{itemize}
+\item Bernardo Mendoza
+\item JL Cabellos
+\item Tonatiuh Rangel
+\item Cuahutemoc Salzar
+\item Norberto Arzate
+%\item John Sipe
+\item Fred Nastos  
+\end{itemize}
