@@ -8,6 +8,7 @@ tiniba-manual.pdf
 *.fls
 *.out
 *.toc
+*.pdf
 
 ## Intermediate documents:
 *.dvi
