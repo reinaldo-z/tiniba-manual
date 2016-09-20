@@ -1,10 +1,13 @@
-\documentclass[12pt,leqno]{article}
+\documentclass[12pt]{article}
+%\documentclass[12pt,leqno]{article}
 %% JL Cabellos at agosto 2010
 \usepackage{amsmath,amssymb,amsfonts} % Typical maths resource packages
 \usepackage{graphics}                 % Packages to allow inclusion
 \usepackage{color}
 \usepackage[spanish,english]{babel}
 \usepackage{verbatim}
+\usepackage{fancyvrb}
+\usepackage{showkeys}
 \usepackage{graphicx}
 \selectlanguage{english}
 %\selectlanguage{spanish}
@@ -48,7 +51,7 @@
 \pagestyle{fancy}
 \fancyhf{}
 %\fancyhead[LC]{\thepage}
-%\fancyhead[LR]{\thepage} %%% pon the page number en el lado derecho
+\fancyhead[LR]{\thepage} %%% pon the page number en el lado derecho
 
 %\textwidth 16cm 
 
@@ -68,7 +71,7 @@
 \end{center}
 \vspace{12pt}
 \Large{\textbf{TINIBA${\reg}$ Tutorial: Version \ver} \\
- Bernardo S. Mendoza and J. L. Cabellos}\\
+Bernardo S. Mendoza, Sean M. Anderson, and J. L. Cabellos}\\
 INDAUTOR Certificate \ref{inpi} 
 }
 % \small{Consejo de Ciencia y Tecnolog\'ia del Estado de Guanajuato
@@ -99,7 +102,7 @@ Superficies''
 %\href{http://aida.cio.mx}{PRONASIS}}                   %   
 %\date{\selectlanguage{spanish} \today}
 %\date{\today}
-                        
+\allowdisplaybreaks 
 \begin{document}
 %\fancyfoot[C]{\thepage}
 %\selectlanguage{spanish}                        
@@ -110,7 +113,7 @@ Superficies''
 \newpage
 \section{Introduction}
 
-\textcolor{red}{WARNING}:
+\textcolor{red}{WARNING}: 
 First of all here we adopt the philosophy \emph{{\bf{TINIBA$\reg$ is
       not a black box}}} 
 and you might have some idea about what are you doing in order to make sense.
@@ -121,10 +124,10 @@ and enjoy \tiniba.
 \subsection{Why this guide?}
 In order to improve the calculations faster and easier. 
 
-\subsection{Publications with tiniba}
- A list of publications that used TINIBA$\reg$ package:\\
- 1.- Phys. Rev. B 80, 201312 (2009) \\  
- 2.- Phys. Rev. B 80, 245204 (2009) \\ 
+%\subsection{Publications with tiniba}
+% A list of publications that used TINIBA$\reg$ package:\\
+% 1.- Phys. Rev. B 80, 201312 (2009) \\  
+% 2.- Phys. Rev. B 80, 245204 (2009) \\ 
 
 \subsection{At the begining}
 The propouse of this toutorials is teaching the use of TINIBA$\reg$ 
@@ -219,6 +222,15 @@ shell anew.
   the \verb=abinit= environment variables:\\
 \verb=export I_MPI_FABRICS==\verb=shm:tcp=\\
 \verb=LD_LIBRARY_PATH==\verb=$LD_LIBRARY_PATH:/usr/lib64=
+
+\item AQUI VOY: The following programs need to be compiled:\\
+\verb=$HOME/tiniba/ver#/utils/=
+\begin{enumerate}
+\item \verb=3by3matrices.f90=
+\item\verb=inversion.f90=
+\item\verb=kcart2dlatt.f90=
+\item\verb=consistency-of-cfmn.f90=
+\end{enumerate}
 
 \end{itemize}
 
@@ -413,8 +425,8 @@ as tensor components to be calculated})
 \item {\small So you can check that the nodes chosen are not being used by other user.}
 \end{itemize}
 % aqui voy
-\item \verb=$PWD > =\textcolor{darkgreen}{abinitCheck.sh} \textcolor{blue}{1} 
-\item \verb=$PWD > =\textcolor{darkgreen}{abinitCheck.sh} \textcolor{blue}{2} 
+\item \verb=$PWD > =\textcolor{darkgreen}{abinit\_check.sh} \textcolor{blue}{1} 
+\item \verb=$PWD > =\textcolor{darkgreen}{abinit\_check.sh} \textcolor{blue}{2} 
 \begin{itemize}
 \item \textcolor{red}{Surface Calculations}: If the slab is
   centrosymmetric, responses like  Surface SHG would be identically
@@ -654,13 +666,14 @@ $\bullet$ \textcolor{darkgreen}{ontoi.sh}
 \begin{center}
 \includegraphics[scale=1.0]{plots/3drho}
 \end{center}
-\caption{$\rho_{n\bfk}(z)$ for the Si(111)As surface of the example
-  calcuated with spin-orbit interaction.
+\caption{$\rho_{n\bfk}(z)$ for the Si(111)As surface of the example 
+  calcuated with spin-orbit interaction. 
 }
 \label{figrho}
 \end{figure}
 
-\item Integrated density  $\rho_{n\bfk}(z)=\int dx\int  dy\,|\psi_{n\bfk}(\bfr)|^2$ (see Fig. \ref{figrho})
+\item Integrated density  $\rho_{n\bfk}(z)=\int dx\int
+  dy\,|\psi_{n\bfk}(\bfr)|^2$ (see Fig. \ref{figrho}) 
 
 \begin{itemize}
 \item
@@ -802,11 +815,54 @@ The scissors shift is 1.051 eV.
 }
 \label{shg-surface}
 \end{figure}
-\subsection{Surface} 
+\subsection{Surface}  
 For an example copy from \verb=$TINIBA/examples/surface/nospin/si_as_6=:\\
 \verb=setUpAbinit_si_as_6.in= and \verb=si_as_6.xyz=. This is a
 Si(111)$1\times 1$:As surface with 4 layers of Si, one top and one bottom
 layer of As. See results in \verb=si_as_6/res= and Fig.~\ref{shg-surface}.
+\subsection{Surface Normalization}  
+In Fig.~\ref{chil} we show Im[$\chi(\go)$] for the 
+\verb=si_as_6=
+ slab where three
+different values of the supercell thickness, $L$, were chosen. As the
+response is normalized with the volume $V=AL$ of the supercell, its value
+decreases as $L$ is augmented. When, the results are multiplied by
+$L$, as the area $A$ of the unit cell is fixed, we see that the
+results  nicely converge. Then, the proper normalization is as follows
+\begin{align}\label{m1}
+\frac{L}{L_s}\left(\frac{1}{V}\right) 
+=
+\frac{L}{L_s}\left(\frac{1}{AL}\right) 
+=\frac{1}{AL_s}\equiv\frac{1}{V_s}
+,
+\end{align}
+where $L_s$ is the thickness of the material slab without the vacuum
+layer, and then $V_s$ is the volume of the material slab. The 
+\verb=all_response.sh= shell does the normalization automatically for
+response \verb=24=.
+
+\textcolor{red}{WARNING}: 
+We mention that if one compares the response of the full slab with
+that of the half-slab there is a factor of 2, once the full slab is
+properly normalized as explained above. Then, 
+$\chi_{\mathrm{full-slab}}(\omega)
+=2 \chi_{\mathrm{half-slab}}(\omega)
+$.
+
+\textcolor{red}{WARNING}:
+The code does NOT normalizes the full slab calculation, since  in a
+slab calculation are ``layered'' responses what one ought to calculate. 
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=0.6]{plots/chi-layer}
+\end{center}
+\caption{Im[$\chi(\go)$] for three different supercells thickness
+  $L$. Top-left panel without the normalization, bottom-left panel multiplied by
+  $L$, and top-right panel scaled according to Eq.~\eqref{m1}. 
+}
+\label{chil}
+\end{figure}
+
 
 \section{For developers : how to include a new optics subroutine}
 The optical response is calculated in two steps:\\
@@ -815,134 +871,16 @@ The optical response is calculated in two steps:\\
 \item The integration over $k$.
 \end{enumerate}
 Both subrutines are implemented in Fortran code (thanks to Fred Nastos) and both 
-are in TINIBA$\reg$ package. In order to include another subrutine we are going to 
-modificate only the 
-\emph{integrand}. If this not make sense, you have to read a famous paper 
-PRB 61 5337 of John Sipe and  Anatoli Shkrebtii. 
+are in \tiniba~package. In order to include the  subroutine for a new
+response, we follow the following instructions. 
  
-Suppose that you want to add another subroutine, follows these step:\\ 
-(use any editor that you want)\\
-
-\subsection{a la Cabellos}
-
-This subsection only runs $\chi_{ij}(\omega)$
-and $\chi_{ijk}(2\omega)$ for bulk semiconductors. It assumes that the
-experimental or {\it GW} band gap is known, like in GaAs.
-We are planing to extend this version to other responses and the {\it
-  layer-by-layer } analysis as well. $\chi_{ijk}(2\omega)$ is
-calculated in the length-gauge  and in the velocity-gauge both wrongly
-and correctly scissored. See Cabellos et al., Phys.  Rev. B {\bf 80}, 155205-1-13 (2009).
-
-\begin{itemize}
-\item go to:\\
-\verb= cd $HOME/$TINIBA/SRC_response/SRC_set=  
-\item Make a module. This has ``two'' names, one is the name of the
-  file itself,
-i.e. \verb=ishg1la.f90=
-and the other is the name of the module itself,
-i.e. \verb=IntegrandSHG1Mod.f90=,
- that goes as the first
-line of the file.
-The file with the module has two functions with the
-response prefactor and a ``delta function factor'' depending if the
-response is 1-$\omega$ or 2-$\omega$. It also has the subroutine with
-the integrand that codifies the response to be calculated.\\
-Then you have to link the new module to these next subroutines/modules: 
-
-\item in \verb=IntegrandsMod.f90=
-   \begin{itemize}
-   \item at the top of the file insert the
-     name of the new module, i.e. \\ \verb=USE IntegrandSHG1Mod.f90, ONLY :: SHG1= 
-   \item Asign a case nomber, i.e.\\
-     \verb=case (21)=\\
-     \verb=CALL SGH1(i_spectra)=
-   \end{itemize}
-Notice that the case number is arbitrary but is is linked to the
-\verb=ONLY :: SHG1= 
-
-\item in \verb=SymmetryOperationsMod.f90=
-
-\begin{itemize}
-
-\item write the {\it case} number in the appropriate symmetry {\it transformation},
-i.e. \\
-\verb=  CASE(21,22,26,27,28,29,30,60,61,62,63,64,65,80,81)=\\
-\verb=  CALL transformationSecondOrderResponse(i_spectra)=
-     \end{itemize}
-since the example is for SHG which is a second order response given by a third rank tensor.
-
-\item in \verb=SpectrumParametersFileMod.f90=
-      \begin{itemize}
-      \item chose the tensor rank and its total number of Cartesian
-        components, i.e.\\
-\verb= CASE(21,22)= \\
-\verb=  WRITE(6,*) "Second-harmonic generation: Length Gauge"=\\
-\verb=  dims = = 3\\
-\verb=  length = = 27
-     \end{itemize}
-
-since the rank is 3 and 3$^3$=27
-
-\item in \verb=FileControlMod.f90= include
-
-\begin{itemize}
-\item \verb=USE IntegrandSHG1Mod, ONLY : SHG1_factor, SHG1DeltaFunctionFactor=
-\item
-\verb= CASE(21)=\\
-\verb= rtmp2 = =\verb= rtmp*SHG1_factor()=\\
-\verb= iTmp ==\verb= SHG1DeltaFunctionFactor()=
-
-\end{itemize}
-
-
-\end{itemize}        
-When you finish, you have to compile in the \verb=master=, then you can make use of the 
-advanced tool MakeMakefile.PL (no one uses it) :
-\begin{enumerate}
-\item \verb=$TINIBAU/=\textcolor{darkgreen}{MakeMakefile2010.PL}
-\item
-  \verb=$TINIBAU/=\textcolor{darkgreen}{compiler.sh}\\
-and follow instructions$\ldots$ the executable is in the previous directory.
-\end{enumerate}
-% \begin{verbatim}
-% Usage [Option]:
-%  	3264        : Compile 32 and 64 bits(xeon,itanium and quad)
-% 	xeon        : Compile 32  xeon
-%  	itanium     : Compile 64 itanium
-% 	quad        : Compile 64 quad
-% 	example: ./compiler.sh 3264
-% 	Stoping right now ...
-% \end{verbatim}   
-
-
-
-After this a script has to driver this subrutine, there are several of them 
-if you want to use one of this:\\
-You have to include the number of response in those scripts\\
-/home/\$USER/\$TINIBA/SRC$_{-}$response/\textcolor{darkgreen}{responseSHG.sh}\\
-In this script include a line like this
-\begin{verbatim}
-NAMERES[1]=chi1  ;SIZERES[1]="2"
-\end{verbatim}
-As you see one of this is the name of the subroutine and other is the lenght of the tensor\\ 
-\verb=$HOME/$TINIBA/SRC_response/menu.sh=
-In this script include a line like this
-\begin{verbatim}
-printf "\t${GREEN}22${NC} ${BLU}${NAMERES[22]}${NC}  
-(${GREEN}Length 2 omega${NC})\n"
-\end{verbatim}
-
-In order to be able to run, try it with small case. 
-if you are not able to run ask to Bernardo en the coffe 
-break in order to solve the problem. 
-
 \subsection{Programs for Bulk and Layer-by-Layer response}
 \label{sec:programs}
 
 Do all the compilation in the \verb=master= node and in both 
 \verb=SRC_1setinput=
 and
-\verb=SRC_2latam=.
+\verb=SRC_2latam= directories.
 
 There are two main steps in the calculation of the optical response:
 
@@ -956,37 +894,35 @@ files are in\\
 \verb=$TINIBA/latm/SRC_2latam=
 \end{enumerate}
 
+Document the newest additions in between acronym marks like\\
+\verb=#BMSd=\\
+$\vdots$\\
+\verb=#BMSu=\\
+where \verb=d= is for down and \verb=u= is for up.
+
 \begin{itemize}
 %%%%%%%%%%
 \item\verb=$TINIBA/latm/SRC_1setinput=
 %%%%%%%%%%
 
 \begin{enumerate}
-\item in
+\item In
   \verb=integrands.f90=\\
  include a CASE and the name of the subroutine, i.e \\
 \verb=   CASE(21)=\\
 \verb=   CALL SHG1L=\\
 then write the subroutine itself. You can follow the structure from
   any other subroutine that works, like SHG1L. 
-The newest additions are documented between\\
-\verb=#BMSd=\\
-$\vdots$\\
-\verb=#BMSu=\\
-marks.
 
-\item in \verb=inparams.f90= do the following
+\item In \verb=inparams.f90= do the following
 \begin{itemize}
-\item
-The newest additions are documented between\\
-\verb=#BMSd=\\
-$\vdots$\\
-\verb=#BMSu=\\
-marks.
-\item in the \verb=MODULE inparams= 
+\item In the \verb=MODULE inparams= 
 add the response prefactor as a parameter, i.e.\\
-\verb=REAL(DP),PARAMETER::shg1_factor= $=\cdots$
-\item in the \verb=MODULE inparams=  add the response prefactor in the array\\
+\verb=REAL(DP),PARAMETER::shg1_factor= $=\cdots$\\
+This is a numerical factor such that the response gives the
+appropriate S.I. units, see Sec.~\ref{units}.  
+
+\item In the \verb=MODULE inparams=  add the response prefactor in the array\\
 \verb=spectrum_factor(number_of_known_spectrum_types)==\\       
 $\vdots$\\
 \verb=!    21           22          23           =\\
@@ -995,7 +931,7 @@ $\vdots$\\
 where it is {\bf very important} that the number chosen for the
 \verb=CASE= of the response, i.e. 21, coincides with the position-entree in
 the array.
-\item in the \verb=SUBROUTINE readSpectrumFile= add the \verb=CASE=
+\item In the \verb=SUBROUTINE readSpectrumFile= add the \verb=CASE=
  number in the appropriate response, where \verb=dims= is the rank
  and \verb=length= is the total number of
  Cartesian components of
@@ -1011,7 +947,7 @@ $\vdots$
 
 since the rank is 3 and 3$^3$=27
 
-\item in the \verb=SUBROUTINE deltaFactor= add the 
+\item In the \verb=SUBROUTINE deltaFactor= add the 
 correct\\ \verb=deltaFunctionFactor==1 or 2\\ for 1-$\omega$ and 
 2-$\omega$ transitions, respectively.
  The default value is\\
@@ -1028,7 +964,7 @@ $\vdots$
 since \verb=shg2= is a 2-$\omega$ response term.
 \end{itemize} 
 
-\item in \verb=set_input_ascii.f90=
+\item In \verb=set_input_bin.f90=
  the ``\verb=all='' the ``\verb=standard='' and the \\ 
 ``\verb=layer-by-layer=''
 position and momentum matrix elements are set into arrays so they can be used by the 
@@ -1042,11 +978,11 @@ The newest additions are documented between\\
 \verb=#BMSd=\\
 $\vdots$\\
 \verb=#BMSu=\\
-marks.
+marks, so one can check how new matrix elements can be included.
 %Check that the momentum-matrix elements are
 %properly renormalized due to the scissors shift. 
 
-\item in \verb=symmetry_operations.f90= include the \verb=CASE= number
+\item In \verb=symmetry_operations.f90= include the \verb=CASE= number
   of the response in the appropriate transformation (linear,
   secon-order, etc.), i.e.\\
 $\vdots$
@@ -1069,7 +1005,7 @@ Cartesian subindices of the rotation matrices $M_{i\mathrm{a}}$ are
 summed over.
 
 The following four files basically do not need to be changed.
-\item in \verb=arrays.f90= the arrays are allocated and de-allocated
+\item In \verb=arrays.f90= the arrays are allocated and de-allocated
   for things like the momentum matrix elements. So far it has all the
   arrays needed for many responses, so most likely there is no need to
   edit this file. The file also reads the LDA energies and scissored
@@ -1099,8 +1035,8 @@ $\vdots$\\
 \verb=#BMSu=\\
 marks.
 
-\item \verb=set.pl= This \verb=perl= script puts together the
-  \verb=case.in= files to be run. If changes are needed follow the
+\item \verb=$TINIBA/clustering/itaxeo/set.pl= This \verb=perl= script puts together the
+  \verb=setUpAbinit_case.in= files to be run. If changes are needed follow the
 newest additions documented between\\
 \verb=#BMSd=\\
 $\vdots$\\
@@ -1109,15 +1045,11 @@ marks.
 
 \item Compilation
 \begin{itemize}
-\item run \verb=compila_all.sh= to compile in the three plataforms
+\item run \verb=compiler_all.sh= to compile in the three plataforms
 \item the executable is one directory down, i.e.\\
-\verb=../set_input_32b= for the \verb=Xeon=\\
-\verb=../set_input_64b= for the \verb=Itanium=\\
-\verb=../set_input_quad= for the \verb=quad=
+\verb=../set_input_all=
 \item you may want to change the compiler and compilation flags in:\\
-\verb=Makefile32b= for the \verb=Xeon=\\
-\verb=Makefile64b= for the \verb=Itanium=\\
-\verb=Makefilequad= for the \verb=quad=
+\verb=MakefileAll=
 \end{itemize}
 
 \end{enumerate}
@@ -1147,45 +1079,24 @@ modify it.
 modify it.
 \item Compilation
 \begin{itemize}
-\item run \verb=compila_all.sh= to compile in the three plataforms
+\item run \verb=compiler_all.sh= to compile in the three plataforms
 \item the executable is one directory down, i.e.\\
-\verb=../tetra_method_32b= for the \verb=Xeon=\\
-\verb=../tetra_method_64b= for the \verb=Itanium=\\
-\verb=../tetra_method_quad= for the \verb=quad=
+\verb=../tetra_method_all=
 \item you may want to change the compiler and compilation flags in:\\
-\verb=Makefile32b= for the \verb=Xeon=\\
-\verb=Makefile64b= for the \verb=Itanium=\\
-\verb=Makefilequad= for the \verb=quad=
+\verb=MakefileAll=
 \end{itemize}
 
 \end{enumerate}
 
 \item Name for the Response
 
-The name of the response (i.e. \verb=rhomm=)
+\begin{itemize}
+\item To include a new response once is coded as explained in
+ Sec. \ref{sec:programs}, 
+the name of the response (i.e. \verb=rhomm=) 
  must go in the following files complying with the particular context 
 \begin{itemize}
-\item in \verb=$TINIBA/utils=
-\begin{enumerate}
-\item \verb=all_responses.sh=
-\item \verb=responses.sh=
-\end{enumerate}
-The newest additions are documented between\\
-\verb=#BMSd=\\
-$\vdots$\\
-\verb=#BMSu=\\
-marks.
-\item in \verb=$TINIBA/latm/SRC_1setinput=
-\begin{enumerate}
-\item \verb=arrays.f90=
-\item \verb=inparams.f90=
-\item \verb=set_input_ascii.f90=
-\end{enumerate}
-\item To include a new response once is coded as explained in
- Sec. \ref{sec:programs} 
-
-\begin{itemize}
-\item edit
+\item 
 \verb=$TINIBA/utils/responses.txt=  
 and add the
  number and name of the respnse, perhaps you may want to modify\\
@@ -1196,6 +1107,23 @@ of the displayed text.
   of the calculated responses. Thus for a different name for the same
   response just modify this file!
 \end{itemize}
+\item In \verb=$TINIBA/utils/responses.sh=
+\begin{enumerate}
+\item add the response number around the lines\\
+\Verb+if [ $lt = 'total' ]+ and \Verb+if [ $lt = 'layer' ]+
+\\
+if the response is a layer response. 
+\item around the line \\
+\Verb+for ij in ${scases[@]}+
+\\
+add the response number if no Kramers-Kronig (KK) transformation is
+needed. 
+
+\item \textcolor{blue}{HELP:} look for 
+\verb=#BMSd 09/sep/2016= that account for the latest modification to
+include the spin current injection $\mu^{abcd}$ bulk and layer response.
+
+\end{enumerate}
 \end{itemize}
 
 %%%
@@ -1210,7 +1138,7 @@ of the displayed text.
 
   \verb=$TINIBA/utils/all_responses.sh=\\
 which uses\\
-\verb=$TINIBA/utils/responses_bms.sh=
+\verb=$TINIBA/utils/responses.sh=
 
 \item To include a new response once is coded as explained in
  Sec. \ref{sec:programs} 
@@ -1227,12 +1155,12 @@ of the displayed text.
   and 2-$\go$ terms.
 \end{itemize}
 
-\subsection{Formulas and Units}
+\subsection{Formulas}
 
 
-These are the formulas coded:
+These are the coded formulas: ($\go_{nm}^{Sigma}$ are the scissors energies) 
 
-\begin{itemize}
+\begin{enumerate}
 
 \item Linear response (See Sipe and Shkrebtii PRB {\bf 61}, 5337 (2000) Eq. 34
 % \begin{equation*}\label{chi}
@@ -1243,29 +1171,56 @@ These are the formulas coded:
 % r^i_{nm}(\bfk)r^j_{mn}(\bfk)\gd(\go_{mn}(\bfk)-\go)
 % ,
 % \end{equation*}  
-where $m=c$ and $n=v$ for the resonant condition with $\go>0$),
-\begin{equation*}\label{chif}
-\mathrm{Im}[\chi^{\rma\rmb}(\go)]=\frac{\pi e^2}{\hbar}
+%where $m=c$ and $n=v$ for the resonant condition with $\go>0$),
+\begin{equation}\label{chif}
+\mathrm{Im}[\chi^{\rma\rmb}(-\go;\go)]
+=\frac{\pi e^2}{\hbar}
 \int \frac{d\bfk}{8\pi^3}
-\sum_{vc}
-r^{\rma}_{vc}(\bfk)r^{\rmb}_{cv}(\bfk)\gd(\go_{cv}(\bfk)-\go)
-.
-\end{equation*} 
-For the layer response we replace $r^{\rma}_{vc}(\bfk)\to{\cal
- R}^{(\ell)\rma}_{vc}(\bfk)$ see Mendoza et al, Phys. Rev. B {\bf 74},
-075318 (2006).
+\sum_{vc} 
+r^{\rma}_{vc}(\bfk)r^{\rmb}_{cv}(\bfk)\gd(\go^\gs_{cv}(\bfk)-\go)  
+.  
+\end{equation}  
 
-\item Carrier injection rate, 
-$\dot n(\go)=\xi^{ij}(\go)E^i(-\go)E^j(\go)$,
-where is better to redefine as $\dot{\tilde n}=(\hbar/2)\dot n=\tilde\xi^{ab}E^a(-\go)E^b(\go)$, with
-$\tilde\xi^{ab}=(\hbar/2)\xi^{ab}$.
-\begin{equation*}\label{chifp}
+Static response:
+\begin{equation*}\label{chif0}
+\chi^{\rma\rmb}(0;0)=\frac{e^2}{\hbar}
+\int \frac{d\bfk}{8\pi^3}
+\sum_{vc}\frac{2}{\go^\gs_{cv}}
+\mathrm{Re}[r^{\rma}_{vc}(\bfk)r^{\rmb}_{cv}(\bfk)]
+. 
+\end{equation*} 
+The prefactor (PF) of $\chi^{\rma\rmb}(0;0)$ is
+\begin{align}\label{mcv1}
+\mathrm{PF}[\chi^{\rma\rmb}(0;0)]=\frac{1}{\pi}
+\mathrm{PF[Im}(\chi^{\rma\rmb}(-\go;\go))]
+.
+\end{align}
+For the layer response we replace $r^{\rma}_{vc}(\bfk)\to{\cal 
+ R}^{(\ell)\rma}_{vc}(\bfk)$ see Mendoza et al, Phys. Rev. B {\bf 74},
+075318 (2006). 
+
+\item Carrier injection rate: is defined through,
+\begin{align}\label{cir}
+\dot n(\go)=\xi^{ij}(\go)E^i(-\go)E^j(\go)  
+,
+\end{align} 
+where is better to redefine it as 
+\begin{align}\label{cir}
+\dot{\tilde n}=
+\frac{\hbar}{2}\dot 
+n=\tilde\xi^{ab}E^a(-\go)E^b(\go)
+,
+\end{align}
+i.e. in $\hbar/2$ units, where
+$\tilde\xi^{ab}=(\hbar/2)
+\xi^{ab}$, and
+\begin{equation}\label{chifp}
 \tilde\xi^{\rma\rmb}(\go)=\frac{\pi e^2}{\hbar}
 \int \frac{d\bfk}{8\pi^3}
 \sum_{vc}
 r^{\rma}_{vc}(\bfk)r^{\rmb}_{cv}(\bfk)\gd(\go_{cv}(\bfk)-\go)
 .
-\end{equation*} 
+\end{equation} 
 For the layer response:
 \begin{equation*}\label{xizn}
 \tilde\xi^{ab}(\ell;\go)
@@ -1290,6 +1245,25 @@ $\ge^{ab}(\go)=1+4\pi\chi^{ab}(\go)$, however
 $\tilde\xi^{ab}(\ell;\go)\neq\mathrm{Im}[\chi^{ab}(\ell;\go)]$!!!
 Therefore, for a \textcolor{red}{bulk} calculation, one must calculate
 $\mathrm{Im}[\chi^{ab}(\go)]$ for $\dot n(\go)$.
+Also,
+\begin{align}\label{nn.11}
+\mathrm{Im}[\ge^{\rma\rmb}(\go)]
+&=
+4\pi\mathrm{Im}[\chi^{\rma\rmb}(\go)]
+=
+2\pi\hbar\xi^{\rma\rmb}(\go)
+\nonumber\\
+\Rightarrow 
+\xi^{\rma\rmb}(\go) 
+&=
+\frac{2}{\hbar}\mathrm{Im}[\chi^{\rma\rmb}(\go)],
+\nonumber\\
+\Rightarrow 
+\tilde\xi^{\rma\rmb}(\go) 
+&=
+\mathrm{Im}[\chi^{\rma\rmb}(\go)],
+\end{align}
+
 
 \item Second Harmonic Generation
 \begin{itemize}
@@ -1320,30 +1294,32 @@ v_{vc}^{\Sigma ,a}\{\mathcal{F}_{cv}^{bc}\}]\delta(\omega_{cv}^{S}-2\omega)+\mbo
 Programs: \verb=shg1v= and \verb=shg2v=
 
 \item Length-Gauge: 
-Layered response by bms-unpublished. See \verb=shg-layer-nonlocal.pdf=
+Layered response by bms-unpublished. See\\
+ \verb=/Users/bms/research/austin/shg/shg-notes/shg-layer-nonlocal.pdf=
 \input{chis}
 \end{itemize}
 Programs: \verb=shg1l= and \verb=shg2l= for bulk, i.e. ${\cal
   R}^{\rma(\ell)}_{vc}\to r^\rma_{vc}$.\\
 \verb=shg1c= and \verb=shg2c= for layered.
 
-\item Injection current
 
-\begin{equation*}\label{zetaell}
-\eta^{\rma\rmb\rmc}(\ell|0;\go,-\go)
+\item Injection current  
+
+\begin{equation}\label{etaell}
+\eta^{\rma\rmb\rmc}(\ell|0;\go,-\go)  
 =
 \frac{i\pi e^3}{\hbar^2}
-\intk
+\intk  
 \sum_{vc}
-\gD_{cv}^{\rma,\ell}(\bfk)
+\gD_{cv}^{\rma,\ell}(\bfk)  
 \mathrm{Im}
-\big[ 
-r^{\rmb}_{cv}(\bfk) 
-r^{\rmc}_{vc}(\bfk)
+\big[  
+r^{\rmb}_{cv}(\bfk)  
+r^{\rmc}_{vc}(\bfk)  
 \big]
-\gd(\go_{cv}(\bfk)-\go)
-.\nonumber
-\end{equation*} 
+\gd(\go_{cv}(\bfk)-\go)  
+.  
+\end{equation}  
 For the bulk response we replace 
 $\gD_{cv}^{\rma,\ell}(\bfk) \to \gD_{cv}^{\rma}(\bfk)$, with
 \begin{align}\label{ic.1}
@@ -1359,21 +1335,53 @@ $\cdots$ since $\calc^\ell_{nm}$ needs to be used for the correct
 calculation of
 $\gD_{cv}^{\rma,\ell}(\bfk)$.
 
+\item Shift current
+
+\begin{equation}\label{sigma}
+\sigma^{\rma\rmb\rmc}_2(\ell|0;\go,-\go) 
+=
+\frac{\pi e^3}{\hbar^2}
+\intk 
+\sum_{vc}
+\mathrm{Im}
+\big[ 
+r^{\rmb}_{cv}(\bfk) 
+r^{\rmc}_{vc;\rma}(\bfk) 
+-
+r^{\rmc}_{vc}(\bfk) 
+r^{\rmb}_{cv;\rma}(\bfk) 
+\big]
+\gd(\go_{cv}(\bfk)-\go) 
+. 
+\end{equation} 
+
+
 \item Spin injection
 
-\begin{eqnarray*}\label{zetaabci}
+\begin{align}\label{zetaabci}
 \zeta^{\mathrm{abc}}(\omega)
-&=&
+&=
 \frac{i\pi e^2}{\hbar^2}
 \int\frac{d^3k}{8\pi^3}
 \sum_{vcc'}\,'\,
-\mathrm{Im}\Big[S^{\mathrm{a}}_{c'c}(\mathbf{k}) r^{\mathrm{b}}_{vc'}(\mathbf{k}) r^{\mathrm{c}}_{cv}(\mathbf{k})
+\mathrm{Im}\Big[S^{\mathrm{a}}_{c'c}(\mathbf{k}) r^{\mathrm{b}}_{vc'}(\mathbf{k}) r^{\mathrm{c}}_{cv}(\mathbf{k}) 
 \nonumber\\
-&+& 
+&+ 
 S^{\mathrm{a}}_{cc'}(\mathbf{k}) r^{\mathrm{b}}_{vc}(\mathbf{k}) r^{\mathrm{c}}_{c'v}(\mathbf{k})\Big]
-\delta(\omega_{cv}(\mathbf{k})-\omega)
-.
-\end{eqnarray*}  
+\delta(\omega_{cv}(\mathbf{k})-\omega) 
+\nonumber\\
+&=
+\frac{i\pi e^2}{2\hbar}
+\int\frac{d^3k}{8\pi^3}
+\sum_{vcc'}\,'\,
+\mathrm{Im}\Big[\gs^{\mathrm{a}}_{c'c}(\mathbf{k})
+  r^{\mathrm{b}}_{vc'}(\mathbf{k}) r^{\mathrm{c}}_{cv}(\mathbf{k})  
+\nonumber\\
+&+ 
+\gs^{\mathrm{a}}_{cc'}(\mathbf{k}) r^{\mathrm{b}}_{vc}(\mathbf{k})
+  r^{\mathrm{c}}_{c'v}(\mathbf{k})\Big] 
+\delta(\omega_{cv}(\mathbf{k})-\omega) 
+\end{align}
 Notice that the units of $\zeta^{\rma\rmb\rmc}(\go)$ have a $\hbar/2$
 factor coming from the spin matrix elements $S^{\rma}_{cc'}$ (recall
 that
@@ -1387,30 +1395,880 @@ The degree of spin polarization is defined as
 \end{equation}    
 and it is a dimensionless quantity, as it must. 
 
-For the layered response we replace $S^{\rma}_{cc'}(\bfk)\to {\cal S}^{\ell,\rma}_{cc'}(\bfk)$. 
+For the layered response we replace 
+$S^{\rma}_{cc'}(\bfk)\to {\cal  S}^{\ell,\rma}_{cc'}(\bfk)$.  
 
-\item Units. 
-\begin{itemize}
 
-\item In general, 
-\begin{equation*}\label{si}
-\ge_0\chi_{\mathrm{S.I.}}^{j}=\frac{4\pi\ge_0}{(3\times
- 10^4)^{j-1}}\chi^{j}_{\mathrm{c.g.s}} \times \frac{m^{j-2}C}{V^j}
+\item Spin Current Density
+
+\begin{align}\label{ee.00}
+\mu^{\mathrm{abcd}}=
+\frac{\pi e^2}{\hbar^2}\int \frac{d^3k}{8\pi^3}
+\sum'_{vcc'}\mathrm{Re}
+[
+\bra{c'\bfk}\hat v^{\gS,\rma}\hat S^\rmb\ket{c\bfk}
+\,r^\rmc_{vc'}(\bfk) r^\rmd_{cv}(\bfk)  
++ (\rmc\leftrightarrow\rmd)  
+]\gd(\go_{cv}(\bfk)-\go),
+\end{align} 
+where
+\begin{align}\label{ee.1}
+\bra{c'\bfk}\hat v^{\gS,\rma}\hat S^\rmb\ket{c\bfk}
+&
+=\frac{\hbar}{2}
+\sum_n \bra{c'\bfk}\hat v^{\gS,\rma}\ket{n\bfk}\bra{n\bfk}\hat \gs^\rmb\ket{c\bfk}
+\nonumber\\
+&
+=\frac{\hbar}{2}
+\sum_n v^{\gS,\rma}_{c'n}(\bfk)\gs^\rmb_{nc}(\bfk)
+,
+\end{align}
+then,
+\begin{align}\label{ee.0}
+\mu^{\mathrm{abcd}}=
+\frac{\pi e^2}{2\hbar}\int \frac{d^3k}{8\pi^3}
+&\sum'_{cc'}\mathrm{Re}\Big[
+\sum_n 
+v^{\gS,\rma}_{c'n}(\bfk)\gs^\rmb_{nc}(\bfk)
+\nonumber\\
+&\times\sum_v\Big(
+r^\rmc_{vc'}(\bfk) r^\rmd_{cv}(\bfk) 
++ \,r^\rmd_{vc'}(\bfk) r^\rmc_{cv}(\bfk) 
+\Big) 
+\Big]\gd(\go_{cv}(\bfk)-\go),
+\end{align}
+where $n$ cover all valence and conduction states. We leave the
+$\hbar/2$ out of the units of $\mu^{\mathrm{abcd}}$.
+
+\end{enumerate}
+
+\subsection{Units}\label{units}
+ 
+\begin{enumerate}
+
+\item {\bf S.I. and Gaussian units}
+
+
+In general, there are two possibilities to define the
+  polarization,
+\begin{align}\label{u.69}
+\tilde P&=\varepsilon_0\Big(\chi^{(1)}\tilde E+\chi^{(2)}\tilde E^2+\cdots\Big) 
+\\
+&\text{or}
+\nonumber\\\label{u.69n}
+\tilde P&=\tilde\chi^{(1)}\tilde E+\tilde\chi^{(2)}\tilde E^2+\cdots  
+,
+\end{align}  
+where $\varepsilon_0=8.85 \times 10^{−12}$ F/m, is the permitivity of free space.
+The units of $\tilde P$ 
+are those of charge times distance over
+volume, then 
+\begin{align}\label{u.691}
+[\tilde P]&=[\varepsilon_0]\Big([\chi^{(1)}][\tilde E]+[\chi^{(2)}][\tilde E^2]+\cdots\Big) 
+\nonumber\\
+\frac{\text{C}}{\text{m}^2}&=
+\frac{\text{F}}{\text{m}}
+\Big([\chi^{(1)}]\frac{\text{V}}{\text{m}}
++[\chi^{(2)}]\frac{\text{V}^2}{\text{m}^2}
++\cdots\Big) 
+\nonumber\\
+\frac{\text{C}}{\text{m}^2}&=
+\frac{\text{C}}{\text{m}^2}
+[\chi^{(1)}]
++[\chi^{(2)}]\frac{\text{CV}}{\text{m}^3}
++\cdots 
+\nonumber\\
+&\text{or}
+\nonumber\\
+[\tilde P]&=[\tilde\chi^{(1)}][\tilde E]+[\tilde\chi^{(2)}][\tilde E^2]+\cdots 
+\nonumber\\
+\frac{\text{C}}{\text{m}^2}&=
+[\tilde\chi^{(1)}]\frac{\text{V}}{\text{m}}
++[\tilde\chi^{(2)}]\frac{\text{V}^2}{\text{m}^2}
++\cdots 
+,
+\end{align}  
+since $[\tilde E]=$V/m and F=C/V. We obtain that,
+\begin{align}\label{u.692}
+[\chi^{(1)}]=\text{dimensionless}
+&\quad 
+[\chi^{(2)}]=\frac{\text{m}}{\text{V}}
+\nonumber\\
+[\tilde\chi^{(1)}]=\frac{\text{C}}{\text{mV}}=\frac{\text{F}}{\text{m}}
+&\quad 
+[\tilde\chi^{(2)}]=\frac{\text{C}}{\text{V}^2}
+,
+\end{align}
+and the higher order $\chi$'s could be worked out along the same
+line. Above units are in the MKS system. In the cgs system, 
+$\tilde E$, $\tilde P$, $\tilde D$, $\tilde B$, $\tilde H$, and
+$\tilde M$, have the same units; in particular, the units of $\tilde
+E$ and $\tilde P$ are given by,
+\begin{align}\label{u.2}
+[\tilde E]=[\tilde P]=
+\frac{\text{statvolt}}{\text{cm}}
+=
+\frac{\text{statcoulomb}}{\text{cm}^2}
+=
+\left(\frac{\text{erg}}{\text{cm}^3}\right)^{1/2}
+,
+\end{align} 
+and therefore 
+\begin{align}\label{u.3}
+[\tilde \chi^{(1)}]&=\text{dimensionless}
+\nonumber\\
+[\tilde \chi^{(2)}]&=
+\frac{\text{cm}}{\text{statvolt}}
+=\left(\frac{\text{erg}}{\text{cm}^3}\right)^{-1/2}
+,
+\end{align}
+where the units are referred simply as electrostatic units (esu). 
+
+Con convert from the esu system to the MKS system, we write
+\begin{align}\label{u.5}
+\tilde P&=\varepsilon_0
+\chi^{(1)}\tilde E\Big(1+\frac{\chi^{(2)}}{\chi^{(1)}}\tilde E+\cdots\Big) \quad(\text{MKS})
+\nonumber\\
+\tilde P&=\tilde\chi^{(1)}\tilde E\Big(1+\frac{\tilde\chi^{(2)}}{\tilde\chi^{(1)}}\tilde E+\cdots  \Big)\quad\text{(gaussian)}
+,
+\end{align} 
+where the power series must be identical in each of these equations.
+Using the fact that 1 statvolt=300 V, and Eq.~\eqref{u.2} we find that 
+\begin{align}\label{u.10}
+\tilde E\, (\text{MKS})=3\times 10^4\tilde E \,(\text{gaussian})
+.
+\end{align}
+To relate the MKS with the gaussian susceptibilities, we proceed as
+follows,
+\begin{align}\label{u.11}
+\tilde D &= \tilde E + 4\pi\tilde P 
+=\tilde E\big(1+4\pi\tilde \chi^{(1)})\quad\text{gaussian}
+\nonumber\\
+\tilde D &= \varepsilon_0\tilde E + \tilde P 
+=\varepsilon_0\tilde E\big(1+ \chi^{(1)})\quad\text{MKS}
+,
+\end{align}   
+from where
+\begin{align}\label{u.12}
+\chi^{(1)}\,(\text{MKS})= 
+4\pi\tilde \chi^{(1)}\,(\text{gaussian})  
+.  
+\end{align}   
+Using Eq.~\eqref{u.10} and Eq.~\eqref{u.5}, we find that
+\begin{align}\label{u.13}
+\chi^{(2)}\,(\text{MKS})=
+\frac{4\pi}{4\times 10^4}\tilde \chi^{(2)}\,(\text{gaussian}) 
+, 
+\end{align}  
+which can be generalized to
+\begin{equation}\label{si0}
+\chi_{\mathrm{S.I.}}^{(j)}=\frac{4\pi}{(3\times 
+ 10^4)^{j-1}}\tilde\chi^{(j)}_{\mathrm{cgs}}
+,
+\end{equation} 
+with $j$ the order of the response.  Now, from Eqs.~\eqref{u.69}-\eqref{u.69n}, in
+the MKS system
+\begin{align}\label{u.20}
+\tilde\chi^{(j)}_{\text{S.I.}}=\varepsilon_0\chi^{(j)}_{\text{S.I.}}
+,
+\end{align}
+and the equivalent of Eq.~\eqref{si0} is
+\begin{equation}\label{si.2}
+\tilde\chi_{\mathrm{S.I.}}^{(j)}=\frac{4\pi\ge_0}{(3\times 
+ 10^4)^{j-1}}\tilde\chi^{(j)}_{\mathrm{cgs}} \times 
+\frac{\text{m}^{j-2}\text{C}}{\text{V}^j}
+,
+\end{equation}  
+where the 
+$\text{m}^{j-2}\text{C}/\text{V}^j$
+units already have those of $\varepsilon_0$, and thus we use
+the following numerical factor for
+\begin{equation*}\label{is}
+\frac{1}{4\pi\ge_0}=9\times 10^9%\frac{Nm^2}{C^2}
 ,
 \end{equation*} 
-with $j$ the order of the response. 
+with which
+\begin{equation}\label{si}
+\tilde\chi_{\mathrm{S.I.}}^{(j)}=
+\frac{1}{9\times 10^9}\frac{1}{(3\times 
+ 10^4)^{j-1}}\tilde\chi^{(j)}_{\mathrm{cgs}} \times 
+\frac{\text{m}^{j-2}\text{C}}{\text{V}^j}
+,
+\end{equation} 
+is the conversion factor (including the S.I. units) in going from cgs
+to S.I., where we follow the representation of
+Eq.~\eqref{u.69n} for the polarization; then,
+\begin{align}\label{u.691}
+[\tilde\chi^{(j)}_{\mathrm{S.I.}}]
+&=
+\frac{\text{m}^{j-2}\text{C}}{\text{V}^j}
+,
+\end{align}
 
-\item As an example we work the injection current units:
+Then, we every response, $\calr$, calculated by \tiniba, has a
+prefactor $\gamma$ and the units in the S.I. system of units, given in
+the following items. $\gamma$ is coded in
+\verb=$TINIBA/latm/SRC_1setinput/inparams.f90=. 
 
-\begin{equation*}\label{unp}
-\gamma=\frac{\pi e^3}{\hbar^2}\times\frac{1}{\gO}\times v \times 
+\item {\bf Response's prefactors}\\
+
+Any response $\calr$ calculated by \tiniba, is written as
+\begin{align}\label{pf.1}
+\calr=\gamma\,\tilde\calr
+,
+\end{align}
+where $\tilde\calr$ is the quantum mechanical expression obtained for
+$\calr$, and $\gamma$ is the prefactor that one obtains, by using the
+Gaussian units of the matrix elements that enter into $\tilde\calr$.
+In the following numerals, we calculate $\gamma$, for the responses
+that can be calculated with \verb=all_responses.sh=, and are coded
+in \tiniba. The units of $\calr$, denoted as $[\calr]$, are given in
+the S.I. system of units. Enjoy!
+
+All the prefactors are coded in\\
+\verb=$TINIBA/latm/SRC_1setinput/inparams.f90=
+
+
+\item {\bf Linear Response}\\ 
+From Eq.~\eqref{chif}, the prefactor $\gamma$ in Gaussian cgs units is given by  
+\begin{align}\label{e.4}
+\gamma 
+&=
+\frac{\pi e^2}{\hbar}\times\frac{1}{[\gO]}
+\times [r^2] \times \frac{1}{[\go]}
+=
+\frac{\pi e^2}{\hbar}\times\frac{1}{a^3_0}
+\times \frac{[v^2]}{[\go^2]} 
+\times \frac{1}{[\go]}
+\nonumber\\
+&
+=
+\frac{\pi e^2}{\hbar a^3_0}\frac{[v^2]}{[\go^3]} 
+=
+\frac{\pi e^2\hbar^2}{a^3_0}\frac{p^2}{m^2(\hbar\go)^3} 
+=
+\frac{\pi e^2\hbar^2}{m^2a^3_0}\frac{\hbar^2}{a^2_0}\frac{1}{eV^3} 
+\nonumber\\
+&
+=
+\frac{\pi e^2\hbar^4}{m^2a^5_0}\frac{1}{eV^3} 
+\frac{(27.21eV)^3}{H^3}
+=
+\frac{\pi e^2\hbar^4}{m^2a^5_0}
+\frac{1}{(e^6/a^3_0)}27.21^3 
+=
+\frac{\pi \hbar^4}{e^4}
+\frac{1}{(ma_0)^2}27.21^3 
+\nonumber\\
+&=
+\frac{\pi \hbar^4}{e^4}
+\frac{1}{\hbar^4/e^4}27.21^3 
+=
+\pi (27.21)^3 
+\nonumber\\
+%\Rightarrow\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+&=\pi (27.21)^3 
+, 
+\end{align} 
+where we used, 
+$[r]=[v]/[\go]$, $[p]=\hbar/a_0$, $H=e^2/a_0$, and  
+$a_0=\hbar^2/(me^2)$  
+is the Bohr radius en cgs, where
+$a_0=4\pi\ge_0\hbar^2/(me^2)$ in S.I. 
+
+In short, we could write that in cgs,  
+\begin{align}\label{e.69}
+\gamma^{(1)}_{\mathrm{cgs}} 
+&\equiv
+\frac{\pi e^2}{\hbar}\times\frac{1}{[\gO]}
+\times \frac{[r^2]}{[\go]}
+=\pi (27.21)^3, 
+\end{align}
+is a dimensionless quantity, that we will use below, to simplify the
+calculation of the units of other response functions. The $^{(1)}$
+reminds us that it comes from the linear response.
+$\gamma^{(1)}_{\mathrm{cgs}}$ is coded under \verb=Chi1_factor=
+
+Then, we see that 
+\begin{align}\label{dim1o}
+[\mathrm{Im}[\chi^{\rma\rmb}_{\mathrm{cgs}}(-\go;\go)]] \quad\mathrm{dimensionless} 
+, 
+\end{align} 
+and from Eq.~\eqref{u.12} we obtain that
+\begin{align}\label{dim1}
+\mathrm{Im}[\chi^{\rma\rmb}_{\mathrm{S.I.}}(-\go;\go)] 
+=4\pi
+\mathrm{Im}[\chi^{\rma\rmb}_{\mathrm{cgs}}(-\go;\go)] 
+, 
+\end{align}
+and thus
+$\mathrm{Im}[\chi^{\rma\rmb}_{\mathrm{S.I.}}(-\go;\go)]$
+is also dimensionless. 
+  
+\item {\bf Carrier Injection Rate}
+
+From Eqs.~\eqref{dim1} and \eqref{nn.11}, we see that 
+in Gaussian units
+ \begin{align}\label{dim2}
+\xi^{\rma\rmb}
+&=\frac{2}{\hbar}\mathrm{Im}[\chi^{\rma\rmb}]
+\nonumber\\
+\Rightarrow  
+\xi^{\rma\rmb}_{\mathrm{S.I.}}
+&=8\pi\frac{\ge_0}{\hbar}\mathrm{Im}[\chi^{\rma\rmb}_{\mathrm{cgs}}]
+. 
+\end{align}   
+From Eq.~\eqref{e.4}, we obtain that the corresponding $\gamma$ for 
+$\xi^{\rma\rmb}$ is given by
+ \begin{align}\label{dim2}
+\gamma _{\mathrm{S.I.}}
+&=8\pi\frac{\ge_0}{\hbar}
+\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+=
+8\pi\gamma_{\chi^{(1)}_{\mathrm{cgs}}} \frac{8.854 187 817 \times 10^{-12}}{1.054571800\times 10^{-34}}
+\nonumber\\
+&=
+2.1102 \times  
+\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\times 10^{24}
+, 
+\end{align} 
+and 
+ \begin{align}\label{dim21}
+[\xi^{\rma\rmb}_{\mathrm{S.I.}}]
+&=
+\frac{1}{msV^2}
+. 
+\end{align}  
+
+From Eq.~\eqref{nn.11}, the prefactor $\gamma$ of $\xi^{\rma\rmb}$ is given by 
+\begin{align}\label{ne.4nn}
+\gamma_{\mathrm{cgs}} 
+&=
+\frac{2\pi e^2}{\hbar^2}\times\frac{1}{[\gO]}
+\times [r^2] \times \frac{1}{[\go]}
+=\frac{2}{\hbar}
+\gamma^{(1)}_{\mathrm{cgs}}
+\nonumber\\
+\gamma_{\mathrm{SI}} 
+&=4\pi\ge_0\frac{2}{\hbar}
+\gamma^{(1)}_{\mathrm{cgs}}
+=8\pi\frac{\ge_0}{\hbar}
+\gamma^{(1)}_{\mathrm{cgs}}
+\nonumber\\
+&=
+2.1102 \times  
+\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\times 10^{24}
+,
+\end{align}
+just as Eq.~\eqref{dim2}.
+
+\textcolor{red}{Remark:} the $1/(3\times 10^4)$ factor coming from 
+Eq.~\eqref{si.2} is not needed, as there is no extra electron charge $e$ in 
+this $\gamma$. 
+
+
+Bellow is an alternative way to get the same result.
+From Eq.~\eqref{nn.11}, the prefactor $\gamma$ of $\xi^{\rma\rmb}$ is given by 
+\begin{align}\label{ne.4n}
+\gamma 
+&=
+\frac{2\pi e^2}{\hbar^2}\times\frac{1}{[\gO]}
+\times [r^2] \times \frac{1}{[\go]}
+=
+\frac{2\pi e^2}{\hbar^2}\times\frac{1}{a^3_0}
+\times \frac{[v^2]}{[\go^2]} 
+\times \frac{1}{[\go]}
+\nonumber\\
+&
+=
+\frac{2\pi  e^2}{\hbar^2 a^3_0}\frac{[v^2]}{[\go^3]} 
+=
+\frac{2\pi  e^2\hbar}{a^3_0}\frac{p^2}{m^2(\hbar\go)^3} 
+=
+\frac{2\pi  e^2\hbar}{m^2a^3_0}\frac{\hbar^2}{a^2_0}\frac{1}{eV^3} 
+\nonumber\\
+&
+=
+\frac{2\pi  e^2\hbar^3}{m^2a^5_0}\frac{1}{eV^3} 
+\frac{(27.21eV)^3}{H^3}
+=
+\frac{2\pi  e^2\hbar^3}{m^2a^5_0}
+\frac{1}{(e^6/a^3_0)}27.21^3 
+=
+\frac{2\pi  \hbar^3}{e^4}
+\frac{1}{(ma_0)^2}27.21^3 
+\nonumber\\
+&=
+\frac{2\pi  \hbar^3}{e^4}
+\frac{1}{\hbar^4/e^4}27.21^3 
+=
+\frac{2\pi}{\hbar} 
+ (27.21)^3 
+\nonumber\\
+\gamma 
+&=\frac{2\pi}{\hbar} 
+(27.21)^3= \frac{2}{\hbar}\gamma_{\mathrm{Im}[\xi]} 
+\nonumber\\
+\Rightarrow\gamma_{\mathrm{S.I.}}
+&=8\pi\frac{\ge_0}{\hbar} \gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+,
+\end{align}
+same as Eq.~\eqref{dim2}.
+We used, 
+$[r]=[v]/[\go]$, $[p]=\hbar/a_0$, $H=e^2/a_0$, and 
+$a_0=\hbar^2/(me^2)$. 
+
+\textcolor{red}{\bf WARNING}: \tiniba does not calculate 
+$\xi^{\rma\rmb}$  
+directly, instead it calculates $\xi^{\rma\rmb}$ using option 
+\verb=-r 1= in 
+\verb=all_responses.sh=; then, the user has to do the following to 
+\begin{align}\label{f.1}
+\xi^{\rma\rmb}=2.1102\times\mathrm{Im}[\chi^{\rma\rmb}] 
+\end{align}
+in order to 
+obtain $\xi^{\rma\rmb}$ in $10^{24}\, V^{-2}m^{-1}s^{-1}$. 
+ 
+\item {\bf Spin Injection}\\
+From Eqs. (48-49) (\{rnn.n2\},\{rnn.n3\}) of\\
+\verb=/Users/bms/research/spin-current/notes/mu.tex=
+\begin{align}\label{rnn.n2}
+\zeta_{\mathrm{S.I.}}&=4\pi\frac{\hbar}{2}\frac{\ge_0}{\hbar}
+\mathrm{Im}[\chi_{\mathrm{cgs}}]
+,
+\end{align} 
+then
+\begin{align}\label{dim16}
+\gamma&=2\pi
+\ge_0  
+ \gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\nonumber\\
+&=2\pi  \gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\times 8.854 187 817 \times 10^{-12}
+\nonumber\\
+&=5.56325  \gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\times 10^{-11}
+,
+\end{align}
+and the units are
+\begin{align}\label{rnn.n3}
+[\zeta_{\mathrm{S.I.}}]&=[\hbar]\frac{[\ge_0]}{[\hbar]}
+=Js 
+\frac{F/m}{Js}=Js\frac{C/mV}{CVs}
+=
+\frac{J}{mV^2}
+.
+\end{align}
+From Eq.~\eqref{zetaabci} and \eqref{e.69}, 
+$\gamma_{\mathrm{cgs}}$ is given by 
+\begin{align}\label{uzp.1}
+\gamma_{\mathrm{cgs}}&=
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times[r]^2\times\frac{1}{[\go]}
+\nonumber\\
+&=
+\frac{1}{2}\gamma^{(1)}_{\mathrm{cgs}} 
+\nonumber\\
+\Rightarrow  
+\gamma_{\mathrm{S.I.}} &= 
+4\pi\ge_0\frac{1}{2}\gamma^{(1)}_{\mathrm{cgs}}
+= 
+2\pi\ge_0\gamma^{(1)}_{\mathrm{cgs}}
+,
+\end{align} 
+\textcolor{red}{Remark:} the $1/(3\times 10^4)$ factor coming from 
+Eq.~\eqref{si.2} is not needed, as there is no extra electron charge $e$ in 
+this $\gamma$. 
+
+
+Bellow is an alternative way to obtain the same result.
+From Eq.~\eqref{zetaabci}, $\gamma$ is given by 
+\begin{align}\label{uz.1}
+\gamma&=\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times[r]^2\times\frac{1}{[\go]}
+\nonumber\\
+&=
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times[v]^2\times\frac{1}{[\go^3]}
+=
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times\frac{[p]^2}{m^2}
+\times\frac{\hbar^3}{eV^3}
+\nonumber\\
+&=
+\frac{\pi e^2\hbar^2}{2a_0}\times\frac{1}{(ma_0)^2}\times\frac{\hbar^2}{a^2_0}
+\times\frac{1}{eV^3}\times \frac{(27.21eV)^3}{H^3}
+\nonumber\\
+&=
+\frac{\pi e^2\hbar^4}{2a^3_0}\times\frac{1}{(\hbar^2/e^2)^2}
+\times \frac{(27.21)^3}{(e^2/a_0)^3}
+=
+\frac{\pi}{2}(27.21)^3  
+\nonumber\\
+&=
+\frac{1}{2}\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\nonumber\\
+\Rightarrow  
+\gamma &=  
+4\pi\ge_0\frac{1}{2}\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+=  
+2\pi\ge_0\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+,
+\end{align}  
+which is the same as Eq.~\eqref{dim16}.
+
+\textcolor{red}{\bf WARNING}: \tiniba calculates 
+$\zeta^{\rma\rmb\rmc}$  
+directly, option 
+\verb=-r 41= in 
+\verb=all_responses.sh=; then, the user has to report the results as
+\begin{align}\label{f.2}
+\zeta^{\rma\rmb\rmc}_{\tiniba}\times 10^{-11} \frac{J}{mV^2}
+\end{align}
+
+\item{\bf Degree of Spin Polarization}\\
+
+The degree of Spin polarization is defined as
+\begin{align}\label{dsp1}
+{\cal D}^a&=\frac{\dot S^a}{(\hbar/2)\dot n}
+=\frac{2}{\hbar}\frac{\zeta^{\rma\rmb\rmc}E^\rmb(-\go)E^\rmc(\go)}
+{\xi^{\rmb\rmc}E^\rmb(-\go)E^\rmc(\go)}
+=\frac{2}{\hbar}\frac{\zeta^{\rma\rmb\rmc}}
+{\xi^{\rmb\rmc}}
+\nonumber\\
+&=
+\frac{2}{\hbar}\frac{\zeta^{\rma\rmb\rmc}_{\tiniba}\times 10^{-11}}
+{2.1102\times \mathrm{Im}[\chi^{\rmb\rmc}_{\tiniba}]\times 10^{24}}
+\nonumber\\
+&=
+0.1896\frac{\zeta^{\rma\rmb\rmc}_{\tiniba}}
+{2.1102\times \mathrm{Im}[\chi^{\rmb\rmc}_{\tiniba}]}
+\nonumber\\
+&=
+\frac{0.08987\times\zeta^{\rma\rmb\rmc}_{\tiniba}}
+{\mathrm{Im}[\chi^{\rmb\rmc}_{\tiniba}]}
+, 
+\end{align}
+where we used Eq.~\eqref{f.1} and \eqref{f.2}, and 
+$\hbar=1.05459\times 10^{-34}\,Js$. 
+
+
+\item {\bf Spin Current Density}\\ 
+
+The units are worked out as follows,
+\begin{align}\label{zp.1}
+[\dot K]&=[\mu][E]^2 
+\nonumber\\
+\frac{1}{s}\frac{m}{s}\hbar\frac{1}{m^3}
+=
+\frac{\hbar}{s^2m^2}
+&=[\mu]
+\frac{V^2}{m^2} 
+\nonumber\\
+\Rightarrow 
+[\mu]&=\frac{\hbar}{s^2V^2}=\frac{J}{sV^2}
+\nonumber\\
+\Rightarrow 
+[\dot K]&=\frac{J}{sm^2}
+,
+\end{align} 
+where we recall that $\hat\bfS$ is the spin density. 
+
+
+From 
+Eq.~\eqref{ee.0} and \eqref{e.69}, we obtain the prefactor $\gamma_{\mathrm{cgs}}$ of 
+$\mu^{\mathrm{abcd}}_{\mathrm{cgs}}$ in 
+ cgs  units is worked out as follows, 
+\begin{align}\label{e.4c}
+\gamma_{\mathrm{cgs}}
+&=[v]
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times[r]^2\times\frac{1}{[\go]}
+=\frac{1}{2}
+\gamma^{(1)}_{\mathrm{cgs}}
+[v]
+\nonumber\\
+&
+=\frac{1}{2}
+\gamma^{(1)}_{\mathrm{cgs}}
+\frac{\hbar}{ma_0}
+\nonumber\\
+\Rightarrow 
+\gamma_{\mathrm{S.I.}} &=
+\frac{1}{2}\frac{\hbar}{ma_0}
+ 4\pi\ge_0\gamma^{(1)}_{\mathrm{cgs}} 
+=2\pi\gamma^{(1)}_{\mathrm{cgs}}  \frac{\hbar}{ma_0}
+\ge_0 
+,
+\end{align} 
+using cgs values $m=9.1095\times 10^{-28}$ gr,
+$a_0=5.29\times 10^{-9}$ cm 
+and $\hbar=1.05459\times 10^{-27}$ erg$\cdot$s, we obtain 
+\begin{align}\label{e.5n}
+\frac{\hbar}{ma_0}
+&=2.188\times 10^{8}\,\frac{cm}{s}
+=2.188\times 10^{6}\,\frac{m}{s}
+\nonumber\\
+\ge_0&=8.854187817\times 10^{-12}\,\frac{J}{mV^2}
+\nonumber\\
+\Rightarrow 
+\frac{\hbar}{ma_0}
+\ge_0&=1.937\times 10^{-5}\,\frac{m}{s}\frac{J}{mV^2}
+=1.937\times 10^{-5}\,\frac{J}{sV^2}
+\nonumber\\
+\gamma_{\mathrm{S.I.}} &=
+1.217 
+\gamma^{(1)}_{\mathrm{cgs}}\times 10^{-4} 
+\nonumber\\
+\gamma_{\mathrm{S.I.}} &=
+7.704
+\end{align}
+Therefore, \tiniba, uses 7.704 as prefactor, and 
+\begin{align}\label{e.6}
+\mu^{\mathrm{abcd}}_{\mathrm{S.I.}}&=
+\mu^{\mathrm{abcd}}_{\tiniba}\,\frac{J}{sV^2}
+,
+\end{align} 
+where the units agree with Eq.~\eqref{zp.1}.
+$\gamma_{\mathrm{S.I.}}$ is coded under \verb=mu_factor=
+
+Bellow is an alternative way to obtain above result.
+Eq.~\eqref{ee.0}, we obtain the prefactor $\gamma$ of  
+$\mu^{\mathrm{abcd}}_{\mathrm{cgs}}$ in  
+ cgs  units is worked out as follows, 
+\begin{align}\label{e.4c}
+\gamma&=[v]
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times[r]^2\times\frac{1}{[\go]}
+\nonumber\\
+&=[v]
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times[v]^2\times\frac{1}{[\go^3]}
+=[v]
+\frac{\pi e^2}{2\hbar}\times\frac{1}{a^3_0}\times\frac{[p]^2}{m^2}
+\times\frac{\hbar^3}{eV^3}
+\nonumber\\
+&=[v]
+\frac{\pi e^2\hbar^2}{2a_0}\times\frac{1}{(ma_0)^2}\times\frac{\hbar^2}{a^2_0}
+\times\frac{1}{eV^3}\times \frac{(27.21eV)^3}{H^3}
+\nonumber\\
+&=[v]
+\frac{\pi e^2\hbar^4}{2a^3_0}\times\frac{1}{(\hbar^2/e^2)^2}
+\times \frac{(27.21)^3}{(e^2/a_0)^3}
+=[v]
+\frac{\pi}{2}(27.21)^3 
+\nonumber\\
+&=
+\frac{1}{2}\frac{[p]}{m}\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+=\frac{1}{2}\frac{[p]}{m}\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+=\frac{1}{2}
+\frac{\hbar}{ma_0}
+\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+\nonumber\\
+\Rightarrow 
+\gamma_{\mathrm{S.I.}} &=
+\frac{1}{2}\frac{\hbar}{ma_0}
+ 4\pi\ge_0\gamma_{\chi^{(1)}_{\mathrm{cgs}}} 
+=2\pi\gamma_{\chi^{(1)}_{\mathrm{cgs}}}  \frac{\hbar}{ma_0}
+\ge_0 
+,
+\end{align}  
+where we used that unitwise $[r]=[v]/[\go]$, $[p]=\hbar/a_0$, and $v=p/m$.
+Also, $H=e^2/a_0=27.2\,eV$, $a_0=\hbar^2/me^2$. We remind that Abinit\Reg's 
+units of distance are given in Bohrs $a_0$ and those of energy en eV.
+Using 
+$[\ge_0]=F/m=(C/V)/m=(CV/V^2)/m=J/mV^2$, where $J=CV$
+and the 
+cgs values $m=9.1095\times 10^{-28}$ gr,
+$a_0=5.29\times 10^{-9}$ cm  
+and $\hbar=1.05459\times 10^{-27}$ erg$\cdot$s, we obtain  
+\begin{align}\label{e.5}
+\frac{\hbar}{ma_0}
+&=2.188\times 10^{8}\,\frac{cm}{s}
+=2.188\times 10^{6}\,\frac{m}{s}
+\nonumber\\
+\ge_0&=8.854187817\times 10^{-12}\,\frac{J}{mV^2}
+\nonumber\\
+\Rightarrow  
+\frac{\hbar}{ma_0}
+\ge_0&=1.937\times 10^{-5}\,\frac{m}{s}\frac{J}{mV^2}
+\nonumber\\
+\gamma_{\mathrm{S.I.}} &= 
+1.217 
+\gamma^{(1)}_{\mathrm{cgs}}\times 10^{-4} \,\frac{J}{sV^2}
+\nonumber\\
+\gamma_{\mathrm{S.I.}} &= 
+7.704\,\frac{J}{sV^2}
+.  
+\end{align} 
+where the units agree with Eq.~\eqref{zp.1}. 
+
+\item {\bf Degree of Spin Injection}
+
+The degree of spin injection is defined as 
+\begin{align}\label{eez.1}
+\calv^{\rma\rmb}&\equiv\frac{\dot K^{\rma\rmb}}{(\hbar/2)\dot n}
+=\frac{2}{\hbar}\frac{\mu^{\rma\rmb\rmc\rmd}E^\rmc(-\go)E^\rmd(\go)}
+{\xi^{\rmc\rmd}E^\rmc(-\go)E^\rmd(\go)}
+=\frac{2}{\hbar}\frac{\mu^{\rma\rmb\rmc\rmd}}
+{\xi^{\rmc\rmd}}
+\nonumber\\
+&=
+\frac{2}{\hbar}\frac{\mu^{\rma\rmb\rmc\rmd}_{\tiniba}}
+{2.1101\times\mathrm{Im}[\chi^{\rmc\rmd}_{\tiniba}]\times 10^{24}}
+\frac{J/sV^2}{1/msV^2}
+\nonumber\\
+&=
+\frac{8.987\times 10^{9}\times\mu^{\rma\rmb\rmc\rmd}_{\tiniba}}
+{\mathrm{Im}[\chi^{\rmc\rmd}_{\tiniba}]}
+\frac{1}{Js}Jm 
+\nonumber\\
+&=
+\frac{8.987\times \mu^{\rma\rmb\rmc\rmd}_{\tiniba}}
+{\mathrm{Im}[\chi^{\rmc\rmd}_{\tiniba}]}
+\times 10^9\,\frac{m}{s}
+\nonumber\\
+&=
+\frac{29.98\times \mu^{\rma\rmb\rmc\rmd}_{\tiniba}}
+{\mathrm{Im}[\chi^{\rmc\rmd}_{\tiniba}]}
+\,c
+,
+\end{align} 
+where we used Eq.~\eqref{f.1} and \eqref{e.6}, and 
+$\hbar=1.05459\times 10^{-34}\,Js$. 
+
+\textcolor{red}{\bf WARNING}: 
+The factor 29.98 must be used when plotting $\calv^{\rma\rmb}$, and
+one better get $|\calv^{\rma\rmb}|<c$ !!
+
+\item  {\bf Injection current} 
+
+Using Eq.~\eqref{e.69}, the prefactor $\gamma$ of 
+$\eta^{\rma\rmb\rmc}$ (Eq.~\eqref{etaell}) is:
+\begin{align}\label{unp}
+\gamma_{\mathrm{cgs}}
+&=\frac{\pi e^3}{\hbar^2}\times\frac{1}{\gO}\times v \times  
+r\times r \times \frac{1}{\go}
+=\frac{\pi e^2}{\hbar}\frac{1}{\gO}\frac{r^2}{\go}\times\frac{e}{\hbar} v 
+\nonumber\\
+&=
+\gamma^{(1)}_{\mathrm{cgs}}\times\frac{e}{\hbar} v 
+=
+\gamma^{(1)}_{\mathrm{cgs}}\times\frac{e}{\hbar}\frac{p}{m} 
+=
+\gamma^{(1)}_{\mathrm{cgs}}\times\frac{e}{\hbar}\frac{\hbar}{ma_0} 
+\nonumber\\
+&=
+\gamma^{(1)}_{\mathrm{cgs}}\times\frac{e}{ma_0} 
+\nonumber\\
+&=
+\gamma^{(1)}_{\mathrm{cgs}}\times 
+\frac{-4.80324\times 10^{-10}}{9.1095\times 10^{-28}\times 5.29\times 
+  10^{-9}} 
+\frac{\mathrm{statcoulombs}}{\mathrm{gr}\cdot\mathrm{cm}}
+\nonumber\\
+&=-
+\gamma^{(1)}_{\mathrm{cgs}}\times 
+9.967\times 10^{25}\times 
+\frac{\frac{\mathrm{C}}{3\times 10^9}}{10^{-3}\mathrm{Kg}\cdot 10^{-2}\mathrm{m}}
+\nonumber\\
+&=-
+\gamma^{(1)}_{\mathrm{cgs}}
+\times 
+9.967\times 10^{25}\times 
+\frac{1}{3\times 10^{4}}
+\frac{\mathrm{C}}{\mathrm{Kg}\cdot\mathrm{m}}
+.
+\end{align}
+\textcolor{red}{Remark:} the $1/(3\times 10^4)$ factor 
+comes from the extra electron charge $e$ in 
+this $\gamma$, as we convert statcoulombs to Coulombs, and of course
+cm to m and gr to Kg. In 
+Eq.~\eqref{1si2}, this term comes from
+Eq.~\eqref{si.2}.
+
+It follows that
+\begin{align}\label{z.25}
+\frac{\mathrm{C}}{\mathrm{Kg}\cdot\mathrm{m}}
+=
+\frac{m\mathrm{C}}{\mathrm{Kg}\frac{m^2}{s^2} s^2}
+=
+\frac{m\mathrm{C}}{J s^2}
+=
+\frac{m\mathrm{C}}{CV s^2}
+=
+\frac{m}{V s^2}
+.
+\end{align}
+Now, 
+\begin{align}\label{z.26}
+\gamma_{\mathrm{SI}}
+&=4\pi\ge_0  
+\gamma_{\mathrm{cgs}}
+,
+\end{align}
+where
+\begin{align}\label{z.27}
+4\pi\ge_0=\frac{1}{9\times 10^9}\frac{F}{m}
+=\frac{1}{9\times 10^9}\frac{C}{mV}
+,
+\end{align}
+and from Eq.~\eqref{unp} and \eqref{z.25} we obtain
+\begin{align}\label{z.28}
+\gamma_{\mathrm{SI}}
+&=-
+\gamma^{(1)}_{\mathrm{cgs}}
+\frac{1}{9\times 10^9}
+\times 
+9.967\times 10^{25}\times 
+\frac{1}{3\times 10^{4}}
+\frac{C}{mV}
+\frac{m}{V s^2}
+\nonumber\\
+&=-
+\gamma^{(1)}_{\mathrm{cgs}}
+\frac{1}{27\times 10^{13}}
+\times 
+9.967\times 10^{25}\times 
+\frac{C}{V^2 s^2}
+\nonumber\\
+&=-
+\gamma^{(1)}_{\mathrm{cgs}}
+\frac{1}{27\times 10^{13}}
+\times 
+9.967\times 10^{25}\times 
+\frac{A}{V^2 s}
+\nonumber\\
+&=-
+\pi  
+\times  
+[27.21]^3  
+\times  
+[9.967\times 10^{25}]
+\times[3.7037\times 10^{-15}]
+,
+\end{align}
+where $A=C/s$.
+$\gamma_{\mathrm{SI}}$ is coded under \verb=caleta_factor=
+and 
+\begin{align}\label{u_eta_ecn}
+\eta_{\mathrm{S.I.}}
+&=\eta_{\tiniba}\,
+\frac{A}{V^2 s}
+. 
+\end{align}
+
+Bellow is an alternative way of getting the same result.
+We don't use the [$\cdots$]
+for the units for ease of writing.
+
+The prefactor $\gamma$ of  
+$[\eta^{\rma\rmb\rmc}]$ (Eq.~\eqref{etaell}) is:
+
+\begin{equation*}\label{unpnn}
+\gamma=\frac{\pi e^3}{\hbar^2}\times\frac{1}{\gO}\times v \times   
 r\times r \times \frac{1}{\go}
 ,
-\end{equation*} 
-the first term is the prefactor, the second is the volume of the
-$\bfk$-integration, the third is the velocity of $\gD$ the fourth and
-fifth are the matrix elements of the position operator and the last
-one comes from de Dirac delta function. Using $r=v/\go$ unit-wise
+\end{equation*}   
+the first term is the prefactor, the second is the volume of the 
+$\bfk$-integration, the third is the velocity of $\gD$ the fourth and 
+fifth are the matrix elements of the position operator and the last 
+one comes from de Dirac delta function. Using $r=v/\go$ unit-wise 
 \begin{eqnarray*}\label{un1}
 \gamma
 &=&
@@ -1454,60 +2312,66 @@ one comes from de Dirac delta function. Using $r=v/\go$ unit-wise
 [27.21]^3
 ,
 \end{eqnarray*}
-with $a_0=\hbar^2/me^2$ Bohr's radius, $\hbar\go$ is measured in eV, $v=p/m$ and
-$[p]=\hbar/a_0$, the Hartree $H=e^2/a_0=27.21$ eV, in c.g.s
-$e=-4.8066\times 10^{-10}$ statcoulomb and $\hbar=1.05457\times
-10^{-27}$ erg$\cdot$s, then
+with $a_0=\hbar^2/me^2$ Bohr's radius, $\hbar\go$ is measured in eV, $v=p/m$ and 
+$[p]=\hbar/a_0$, the Hartree $H=e^2/a_0=27.21$ eV, in cgs 
+$e=-4.80324\times 10^{-10}$ statcoulomb and $\hbar=1.05457\times 
+10^{-27}$ erg$\cdot$s, then 
 \begin{equation*}\label{gam2}
 \gamma=-
 \pi
 \times
 [27.21]^3
 \times
-[9.9853\times 10^{25}]
+[9.967\times 10^{25}]
 .
 \end{equation*}
 
-For the injection current we
-have $j=2$, 
-\begin{equation*}\label{si2}
-\eta_{\mathrm{S.I.}}=\frac{4\pi\ge_0}{3\times 10^4}\eta_{\mathrm{c.g.s}} \times \frac{C}{V^2}
+For the injection current, from Eq.~\eqref{si.2},
+we have $j=2$, and then 
+\begin{equation}\label{1si2}
+\eta_{\mathrm{S.I.}}=\frac{4\pi\ge_0}{3 \times  10 ^4}\eta_{\mathrm{cgs}} \times \frac{C}{V^2}
 ,
-\end{equation*} 
+\end{equation} 
+where we see that the $1/(3 \times  10 ^4)$ factor is the same of 
+Eq.~\eqref{unp}, although there it comes from the extra $e$. 
+
 and
 \begin{equation*}\label{is}
 \frac{1}{4\pi\ge_0}=9\times 10^9%\frac{Nm^2}{C^2}
 ,
-\end{equation*} 
+\end{equation*}  
 since the units of $\ge_0$ are already taken into account,
 then
-\begin{equation*}\label{si3}
-\eta_{\mathrm{S.I.}}=\frac{1}{27\times 10^{13}}\eta_{\mathrm{c.g.s}} \times \frac{C^3}{J^2}
+\begin{equation}\label{si3}
+\eta_{\mathrm{S.I.}}=\frac{1}{27\times 10^{13}}
+\eta_{\mathrm{cgs}} \times \frac{C^3}{J^2}
 ,
-\end{equation*}
+\end{equation} 
 where $J=VC$. However, $\eta$ gives the injection current,
 i.e. $dJ/dt=\eta E E$, then there is a second coming from the $J$ and
 another second coming from the time derivative, which finally give
 \begin{eqnarray*}\label{gam}
-\gamma
+\gamma  
 &=&
--\pi
-\times
-[27.21]^3
-\times
-[9.9853\times 10^{25}]
+-\pi  
+\times  
+[27.21]^3  
+\times  
+[9.967\times 10^{25}]
 \times\frac{1}{27\times 10^{13}}
 \nonumber\\
 &=&
--\pi
-\times
-[27.21]^3
-\times
-[9.9853\times 10^{25}]
+-\pi  
+\times  
+[27.21]^3  
+\times  
+[9.967\times 10^{25}]
 \times[3.7037\times 10^{-15}]
 ,
-\end{eqnarray*}
-as the prefactor of $\eta$ in $C^3/J^2 s^2$. For the surface $\eta_s$
+\end{eqnarray*} 
+as the prefactor of $\eta$ in $C^3/J^2 s^2$, which is the same as that
+of Eq.~\eqref{z.28}.
+For the surface $\eta_s$ 
 there is a factor of meters since $\eta_s\sim L \eta$, then the units
 of $\eta_s$ are $mC^3/J^2s^2$. The $L$ factor is set at the
 \verb=gnuplot= file for the plot.
@@ -1517,38 +2381,342 @@ $\gamma_{\mathrm{bulk}}=\gamma/2$ since we use the commutator instead
 of the imaginary part of $ r^{\rmb}_{cv} r^{\rmc}_{vc}$ and
 $i\mathrm{Im}[ab]=[a,b]/2$.
 
-\item SHG
-\begin{equation*}\label{shgu}
-[\chi]=\frac{\pi}{2}\frac{[e]^3}{[\gO][\hbar]^2}\frac{[r]^3}{[\go]^2}
+\item{\bf Electric Current and Swarm Velocity}
+
+The units of the electric current, given by
+\begin{align}\label{ec.3}
+\eta^{\rma\rmb\rmc} 
+&=
+\frac{i\pi e^3}{\hbar^2}
+\int\frac{d^3k}{8\pi^3}
+\sum_{vcc'}
+\mathrm{Im}\Big[ 
+v^\rma_{cc'}(\bfk) r^\rmb_{vc}(\bfk) r^\rmc_{c'v}(\bfk) 
++
+v^\rma_{c'c}(\bfk) r^\rmb_{vc'}(\bfk) r^\rmc_{cv}(\bfk) 
+\Big]
+\gd(\omega-\omega_{cv}(\bfk)) 
 ,
-\end{equation*}
+\end{align}
+are the same as those of the injection current, i.e.
+\begin{align}\label{gam_eta_ec}
+\gamma 
+ & =
+-\pi 
+\times 
+[27.21]^3 
+\times 
+[9.967\times 10^{25}]
+\times[3.7037\times 10^{-15}]
+,
+\end{align}
+coded under \verb=caleta_factor=
+and  
+\begin{align}\label{u_eta_ec}
+\eta_{\mathrm{S.I.}}
+&=\eta_{\tiniba}\,
+\frac{C^3}{J^2 s^2}
+\nonumber\\
+&=\eta_{\tiniba}\,
+\frac{A}{V^2 s}
+.  
+\end{align} 
+For the swarm velocity we have that
+\begin{align}\label{sv.1}
+v_s&=\frac{\eta_{\tiniba}
+\frac{C^3}{J^2s^2}}
+{e\times 2.1102\times\mathrm{Im}[\chi_\tiniba]
+\times 10^{24}\frac{C}{msV^2}}
+\nonumber\\
+&=\frac{2.958\times 10^{-6}\times\eta_{\tiniba}}{\mathrm{Im}[\chi_\tiniba]}\frac{m}{s}
+\nonumber\\
+&=\frac{2.958\times 10^{-9}\times\eta_{\tiniba}}{\mathrm{Im}[\chi_\tiniba]}\frac{Km}{s}
+,
+\end{align}
+where $e=1.602\times 10^{-19}$, and the $C$ (Coulombs) are already
+included in $C/msV^2$.
 
-    % volume = BohrRadius_cgs ** 3
-    % tmp1 = (electronCharge_cgs ** 3) / (hbar_cgs ** 2)
-    % tmp1 = tmp1 * (positionFactor_cgs ** 3)
-    % tmp1 = tmp1 / (frequency_cgs ** 2)
-    % tmp1 = tmp1 / volume
-    % res = makeDouble(tmp1)
-    % SHG1_factor = 2.*res*pi 
-    % !######### 29 Nov. 2008 ##########
-    % !right now in pmV
-    % !##pag. 53 Nonlinear Optics Robert Boyd
-    % !K=4.189E-4*1E12
-    %  SHG1_factor= SHG1_factor*4.189E-4*1E12
-    %  SHG1_factor= SHG1_factor/2.
 
-\item Values: 
-Are given in \verb=cgs= and \verb=mks= units in\\
- \verb=~/tiniba/tiniba2010/SRC_response/SRC_set/PhysicalConstantsMod.f90=
-% the
-%  length-gauge can be found in:\\
-% \verb=/home/bms/tiniba/tiniba2010/SRC_response/SRC_set/=\\
-% \verb=ishg1la.f90= for 1-$\omega$ and
-% \verb=ishg2la.f90= for 2-$\omega$.
+\item {\bf Shift current} units $[\sigma^{\rma\rmb\rmc}_2]$ (Eq.~\eqref{sigma}):
 
-   \end{itemize}
+First, the units of 
+\begin{equation}
+(r^{\mathrm{a}}_{nm})_{;k^{\mathrm{b}}}
+=
+\frac{ 
+r^{\mathrm{b}}_{nm}
+\Delta^{\mathrm{a}}_{mn}
++r^{\mathrm{a}}_{nm}
+\Delta^{\mathrm{b}}_{mn}
+}
+{\omega^\mathrm{LDA}_{nm}}
++
+\frac{i}{\omega^\mathrm{LDA}_{nm}}
+\sum_{q}
+\bigg(
+\omega^\mathrm{LDA}_{q m} 
+r^{\mathrm{b}}_{nq} 
+r^{\mathrm{a}}_{q m}
+-
+\omega^\mathrm{LDA}_{nq} 
+r^{\mathrm{a}}_{nq} 
+r^{\mathrm{b}}_{q m}
+\bigg) 
+,
+\label{rka}
+\end{equation} 
 
-\end{itemize}
+\begin{align}\label{ugd}
+[r^{\rmb}_{nm;\rma}]= r\times v \times \frac{1}{\go}
++\frac{1}{\go}\times\go\times r\times r
+=r\times v \times \frac{1}{\go}=\frac{v^2}{\go^2},
+\end{align}
+since $r=v/\go$ unit wise. Then, from Eq.~\eqref{sigma} we obtain
+\begin{align}\label{unpn}
+\gamma  
+&=
+\frac{\pi e^3}{\hbar^2}\times\frac{1}{\gO}
+\times r \times\frac{v^2}{\go^2}
+\times \frac{1}{\go}
+\nonumber\\
+&=
+\frac{\pi e^3}{\hbar^2}\times\frac{1}{\gO}
+\times\frac{v^3}{\go^4}
+,
+\end{align}   
+in the first line, the first term is the prefactor, the second is the volume of the 
+$\bfk$-integration, the third
+is the matrix elements of the position operator, the fourth
+is from the generalized derivative and the last 
+one comes from de Dirac delta function. 
+Then,
+\begin{align}\label{nunpn1}
+\gamma 
+&=
+\frac{\pi e^3}{\hbar^2}\times\frac{1}{a^3_0}
+\times\frac{p^3}{m^3\go^4}
+=
+\frac{\pi e^3}{m^3a^3_0\hbar^2}
+\times\frac{\hbar^4(\hbar/a_0)^3}{(\hbar\go)^4}
+=
+\frac{\pi e^3\hbar^5}{m^3a^6_0}
+\times\frac{1}{eV^4}
+\nonumber\\
+&
+=
+\frac{\pi e^3\hbar^5}{m^3a^6_0}
+\times\frac{1}{eV^4}
+\times\frac{(27.21 eV)^4}{H^4}
+=
+\frac{\pi e^3\hbar^5}{m^3a^6_0}
+\times\frac{(27.21)^4}{(e^2/a_0)^4}
+\nonumber\\
+&
+=\frac{\pi \hbar^5}{me^5(ma_0)^2}
+\times (27.21)^4 
+=\frac{\pi \hbar^5}{me^5(\hbar^2/e^2)^2}
+\times (27.21)^4 
+\nonumber\\
+&
+=\frac{\pi \hbar}{me}
+\times (27.21)^4 
+\nonumber
+,
+\end{align} 
+with $a_0=\hbar^2/me^2$ Bohr's radius, $\hbar\go$ is measured in eV, $v=p/m$ and 
+$[p]=\hbar/a_0$, the Hartree $H=e^2/a_0=27.21$ eV, in cgs 
+$e=-4.8066\times 10^{-10}$ statcoulomb, $\hbar=1.05457\times 
+10^{-27}$ erg$\cdot$s, and $m=9.109382\times 10^{-28}$ gr, then 
+\begin{equation}\label{c45}
+\gamma=-\pi\times 2.4085102\times 10^9\times (27.21)^4 
+.  
+\end{equation} 
+Notice that we use $e\to|e|$.
+Since the shift current is the same type of nonlinear response as the
+injection current, we can
+use
+Eq.~\eqref{si3} to write
+\begin{align}\label{c46}
+\gamma_\sigma &=-\pi\times 2.4085102\times 10^9\times (27.21)^4 
+\times \frac{1}{27\times 10^{13}} 
+\nonumber\\
+ &=-\pi\times [2.4085102\times 10^9]\times (27.21)^4 
+\times [3.7037\times 10^{-15}]
+,
+\end{align}
+as the prefactor for $\sigma^{\rma\rmb\rmc}_2$. From Eq.~\eqref{si3}
+the units are $C^3/(J^2s)$ where the second comes from the fact that 
+$\bfJ=\boldsymbol{\sigma}\bfE(\go)\bfE(-\go)$ is a current and has a
+an intrinsic $1/s$ since it is derived from the nonlinear polarization
+$\bfP$ as $\bfJ=d\bfP/dt$. Therefore 
+\begin{equation}\label{usigma}
+\frac{C^3}{J^2s}=\frac{C^3}{V^2C^2s}=\frac{A}{V^2}
+,
+\end{equation}
+where $A=C/s$ is the ampere.
+All together, gives
+\begin{equation}\label{c78}
+\sigma^{\rma\rmb\rmc}_{2,S.I.}
+=\gamma_\sigma
+\sigma^{\rma\rmb\rmc}_{2,cgs}\frac{A}{V^2}
+,
+\end{equation}
+
+\item {\bf SHG}\\
+For both bulk and surface we use Eq.~\eqref{u.69} instead of
+Eq.~\eqref{u.69n} for the second order nonlinear polarization. 
+\begin{enumerate}
+\item {\bf Bulk}
+
+Using $r=v/\go$ and $a_0=\hbar^2/me^2$ we obtain
+\begin{align}\label{shgu}
+[\tilde\chi _{\mathrm{cgs}} ]&=\frac{\pi e^3}{2\hbar^2}\frac{1}{\gO}\frac{r^3}{\go^2}
+=\frac{\pi e^3}{2\hbar^2}\frac{1}{\gO}\frac{v^3}{\go^5}
+=\frac{\pi e^3}{2\hbar^2}\frac{1}{a^3_0}\frac{p^3}{m^3\go^5}
+=\frac{\pi e^3}{2m^3a^3_0\hbar^2}\frac{\hbar^5(\hbar/a_0)^3}{(\hbar\go)^5}
+\nonumber\\
+&
+=
+\frac{\pi e^3\hbar^6}{2m^3a^6_0}\frac{1}{eV^5}
+\frac{(27.21eV)^5}{H^5}
+=
+\frac{\pi e^3\hbar^6}{2m^3a^6_0}
+\frac{(27.21)^5}{(e^2/a_0)^5}
+=
+\frac{\pi \hbar^6}{2m^2e^7(ma_0)}
+(27.21)^5 
+\nonumber\\
+&=
+\frac{\pi \hbar^6}{2m^2e^7(\hbar^2/e^2)}
+(27.21)^5 
+=
+\frac{\pi}{2}
+\frac{\hbar^4}{m^2e^5}
+(27.21)^5 
+\nonumber\\
+&=
+\frac{\pi}{2}
+\frac{(1.05457\times 10^{-27})^4}
+{(9.109382\times 10^{-28})^2(4.8066 \times 10^{-10})^5}
+(27.21)^5 
+\nonumber\\
+&=
+\frac{\pi}{2}
+\frac{(1.05457)^4 (27.21)^5 }
+{(9.109382)^2(4.8066)^5}
+\times 10^{-108+56+50}
+=0.86652\times\frac{\pi}{2}
+.
+\end{align}
+From Eq.~\eqref{si0}, using $j=2$, 
+\begin{align}\label{si4n}
+\chi^{\strut}_{\mathrm{S.I.}}
+&=
+\frac{4\pi}{3\times 10^4}
+\tilde\chi^{\strut}_{\mathrm{cgs}} 
+=
+\frac{4\pi}{3\times 10^4}\times 0.86652\times\frac{\pi}{2}
+\langle\tilde\chi^{\strut}_{\mathrm{cgs}}\rangle 
+\nonumber\\
+&=
+\frac{4\pi}{3\times 10^4}\times 0.86652\times\frac{\pi}{2}
+\langle\tilde\chi^{\strut}_{\mathrm{cgs}}\rangle 
+=
+\frac{1.73303\pi^2}{3\times 10^4}\times  
+\langle\tilde\chi^{\strut}_{\mathrm{cgs}}\rangle 
+,
+\end{align} 
+where $[\chi^{\strut}_{\mathrm{S.I.}}]=$m/V and
+$\langle\tilde\chi^{\strut}_{\mathrm{cgs}}\rangle$ is the output from \tiniba. 
+Also, using the fact that m=$10^{12}$pm
+\begin{align}\label{si4n}
+\chi^{\strut}_{\mathrm{S.I.}}
+&=
+0.57768\pi^2\times 10^8 
+\langle\tilde\chi^{\strut}_{\mathrm{cgs}}\rangle 
+\quad[\chi^{\strut}_{\mathrm{S.I.}}]=\text{pm/V}. 
+\end{align}
+
+\item {\bf Surface}
+
+The $\chi$ programed in \tiniba, is normalized with the volume of the
+unit cell, $\gO$. For a surface calculation, $\gO=LA$ where $A$ is the
+area and $L$ the length of the unit cell. $L=$ slab+vacuum
+size. Thus, the surface $\chi^s$ is normalized to $A$ alone, as it is
+a surface quantity, then
+\begin{align}\label{u.30}
+\chi^s&=L\chi 
+\\
+[\chi^s]&=\text{m}^2/\text{V}
+.
+\end{align}
+we obtain
+\begin{align}\label{si14n}
+\chi^s_{\mathrm{S.I.}}
+&=\frac{52.9177249\times L}{1\times 10^6}
+\chi^{\strut}_{\mathrm{S.I.}}
+\quad[\chi^s_{\mathrm{S.I.}}]=\time 10^6\,\text{pm}^2/\text{V}. 
+\end{align}
+where $\chi^{\strut}_{\mathrm{S.I.}}$ is given in Eq.~\eqref{si4n}, and 
+52.9177249
+is the conversion factor from Bohr to pm. 
+Also, $L$ is given by the variable 
+\verb=acellz= of \tiniba. The 
+$(52.9177249\times \text{acellz}/1\times 10^6)$ prefactor is hard coded in
+\verb=$HOME/$TINIBA/latm/SRC_1setinput/integrands.f90=
+
+\end{enumerate}
+
+
+\item {\bf Coding}: the prefactors are coded in\\  
+ \verb=$TINIBA/latm/SRC_1setinput/inparams.f90=
+
+\end{enumerate}
+
+\section{Check Cases}
+
+All plots are in
+\verb=$TINIBA/tiniba-manual/plots=
+
+For Fig.~\ref{fig:xi} (\verb=xi.g=) and \ref{fig:zeta}
+(\verb=zeta.g=), 
+we used
+\verb=setUpAbinit_case.in= and \verb=case.xyz= 
+(\verb=case==\verb=si= or \verb=gaas=)
+found in
+\\
+\verb=$TINIBA/tiniba-manual/plots/data/gaas=\\ 
+and\\
+\verb=$TINIBA/tiniba-manual/plots/data/si=\\
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=.7]{plots/eta-vs}
+\end{center}
+\caption{$\eta^{yyz}=\eta^{xxz}$ and the swarm velocity $v^y_s$ for CdSe 
+  calcuated with spin-orbit interaction. 
+}
+\label{fig:eta-vs}
+\end{figure}
+
+\begin{figure}[t]
+\begin{center}
+\includegraphics[scale=.7]{plots/xi}
+\end{center}
+\caption{$\xi^{xx}=\xi^{yy}=\xi^{zz}$ for Si and GaAs 
+  calcuated with spin-orbit interaction. 
+}
+\label{fig:xi}
+\end{figure}
+\begin{figure}[h]
+\begin{center}
+\includegraphics[scale=.5]{plots/zeta}
+\end{center}
+\caption{$\zeta^{xyz}$ and $\cald^z$ for Si and GaAs. 
+}
+\label{fig:zeta}
+\end{figure}
+
 
 \section{Wien2k}
 In general you can use a all electron (wien2k) or pseudopotential 
@@ -1642,6 +2810,7 @@ to be done
 This list of contributors is not completee, if there are others let us know
 \begin{itemize}
 \item Bernardo Mendoza
+\item Sean M. Anderson
 \item JL Cabellos
 \item Tonatiuh Rangel
 \item Cuahutemoc Salzar
@@ -1656,8 +2825,19 @@ LAST MODIFICATION: by BMS on \date{\today }
 
 \appendix
 
-\section{Extras}
+\section{Extras: gnuplot and Compilation}
 
+\subsection{gnuplot}
+
+Nice trick to plot columns from different files for the same plot
+
+\verb=> p '< paste file1 file2 ...' u #c-file1:#c-file2 w l=\\\\
+where \verb=fileN= is the N-th file and 
+\verb=#c-fileN= is the number of the column of \verb=fileN= to be plotted. 
+
+
+
+\subsection{Compilation}
 
 \begin{enumerate}
 %
@@ -1759,3 +2939,8 @@ $\chi^j$ is $\zeta^{j,\rma\rmb\rmc}$ or
 $\xi^{j,\rmb\rmc}$, with $i=$front-surface or back-surface and
 $j=$full-slab, half-slab or middle.
 %%%%% usless for DSP above
+
+Tiniba is a suit of scripts to run and calculate optical properties of
+crystalline semiconductors by parallelizing the computation of the
+different quantities involved in the procedure.     
+
