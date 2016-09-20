@@ -38,20 +38,39 @@
     8  \def\depe{DP${\texttrademark}$} -> \def\depe{DP${\text{\texttrademark}}$}
 +/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:529: LaTeX Warning: Command \texttrademark invalid in math mode on input line 529.
     8  \def\depe{DP${\texttrademark}$} -> \def\depe{DP${\text{\texttrademark}}$}
++[no file]:577: LaTeX Warning: Command \texttrademark invalid in math mode on input line 577.
+    8  \def\depe{DP${\texttrademark}$} -> \def\depe{DP${\text{\texttrademark}}$}
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:110: LaTeX Warning: Citation `andersonPRB15' on page 31 undefined on input line 110.
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:115: LaTeX Warning: Citation `cabellosPRB09' on page 31 undefined on input line 115.
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:116: LaTeX Warning: Citation `aversaPRB95' on page 31 undefined on input line 116.
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:117: LaTeX Warning: Citation `aversaPRB95' on page 31 undefined on input line 117.
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:122: LaTeX Warning: Citation `cabellosPRB09' on page 31 undefined on input line 122.
+* Added citation \cite{sipePRB00} 1165
 
-
-
-[no file]:577: LaTeX Warning: Command \texttrademark invalid in math mode on input line 577.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:110: LaTeX Warning: Citation `andersonPRB15' on page 31 undefined on input line 110.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:115: LaTeX Warning: Citation `cabellosPRB09' on page 31 undefined on input line 115.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:116: LaTeX Warning: Citation `aversaPRB95' on page 31 undefined on input line 116.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:117: LaTeX Warning: Citation `aversaPRB95' on page 31 undefined on input line 117.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:122: LaTeX Warning: Citation `cabellosPRB09' on page 31 undefined on input line 122.
 [no file]: destination with the same identifier (name{equation.8.28}) has been already used, duplicate ignored
 [no file]: LaTeX Warning: `h' float specifier changed to `ht'.
 [no file]: LaTeX Font Warning: Size substitutions with differences(Font)              up to 0.6pt have occurred.
 [no file]: LaTeX Warning: There were undefined references.
 [no file]: LaTeX Warning: There were multiply-defined labels.
 (Log parsing issues. Disregard unless something else is wrong.)
+
+
+####################################
+
+
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:35: LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <15> not available(Font)              size <14.4> substituted on input line 35.
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.toc: Package Fancyhdr Warning: \headheight is too small (12.0pt): Make it at least 14.49998pt.
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `math shift' on input line 282.
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `\mathsurround' on input line 282.
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `\z@' on input line 282.
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `superscript' on input line 282.
+/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `math shift' on input line 282.
+[no file]: destination with the same identifier (name{equation.8.28}) has been already used, duplicate ignored
+[no file]: LaTeX Warning: `h' float specifier changed to `ht'.
+[no file]: LaTeX Font Warning: Size substitutions with differences(Font)              up to 0.6pt have occurred.
+(Log parsing issues. Disregard unless something else is wrong.)
+
+
+
 
 
