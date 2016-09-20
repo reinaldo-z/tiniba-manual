@@ -1,38 +1,46 @@
 - /Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:35: LaTeX Font Warning: Font shape `OT1/cmss/m/n' in size <15> not available(Font)              size <14.4> substituted on input line 35.
 + /Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `cir' multiply defined.
-1203 tiniba-manual.tex \label -> \label{cir.0}
-1208 tiniba-manual.tex \label -> \label{cir.1}
+    1203 tiniba-manual.tex \label -> \label{cir.0}
+    1208 tiniba-manual.tex \label -> \label{cir.1}
 + /Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `u.2' multiply defined.
-1507 tiniba-manual.tex \label -> \label{u.2}
-1536 tiniba-manual.tex \eqref -> \eqref{u.2}
-89   chis.tex          \label -> \label{u.2.chis}
+    1507 tiniba-manual.tex \label -> \label{u.2}
+    1536 tiniba-manual.tex \eqref -> \eqref{u.2}
+    89   chis.tex          \label -> \label{u.2.chis}
 + /Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `u.3' multiply defined.
-1517 tiniba-manual.tex \label -> \label{u.3}
-94   chis.tex          \label -> \label{u.3.chis}
+    1517 tiniba-manual.tex \label -> \label{u.3}
+    94   chis.tex          \label -> \label{u.3.chis}
 +/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `u.691' multiply defined.
-1466 tiniba-manual.tex \label -> \label{u.691}
-1601 tiniba-manual.tex \label -> \label{u.692}
-=> 1492 \label{u.692} -> \label{u.693}
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `dim2' multiply defined.
-1712 tiniba-manual.tex \label -> \label{dim2}
-1723 tiniba-manual.tex \label -> \label{dim3}
-1765 tiniba-manual.tex \eqref -> \eqref{dim3}
-1818 tiniba-manual.tex \eqref -> \eqref{dim2}
+    1466 tiniba-manual.tex \label -> \label{u.691}
+    1601 tiniba-manual.tex \label -> \label{u.692}
+    => 1492 \label{u.692} -> \label{u.693}
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `dim2' multiply defined.
+    1712 tiniba-manual.tex \label -> \label{dim2}
+    1723 tiniba-manual.tex \label -> \label{dim3}
+    1765 tiniba-manual.tex \eqref -> \eqref{dim3}
+    1818 tiniba-manual.tex \eqref -> \eqref{dim2}
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `e.4c' multiply defined.
+    1980 tiniba-manual.tex \label -> \label{e.4c}
+    2036 tiniba-manual.tex \label -> \label{e.4d}
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `is' multiply defined.
+    1586 tiniba-manual.tex \label -> \label{is.0}
+    2339 tiniba-manual.tex \label -> \label{is.1}
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `si4n' multiply defined.
+    2612 tiniba-manual.tex \label -> \label{si4n}
+    2632 tiniba-manual.tex \label -> \label{si5n}
+    2660 tiniba-manual.tex \eqref -> \eqref{si4n}
+-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.toc: Package Fancyhdr Warning: \headheight is too small (12.0pt): Make it at least 14.49998pt.
+-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `math shift' on input line 282.
+-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `\mathsurround' on input line 282.
+-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `\z@' on input line 282.
+-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `superscript' on input line 282.
+-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `math shift' on input line 282.
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:517: LaTeX Warning: Command \texttrademark invalid in math mode on input line 517.
+    8  \def\depe{DP${\texttrademark}$} -> \def\depe{DP${\text{\texttrademark}}$}
++/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:529: LaTeX Warning: Command \texttrademark invalid in math mode on input line 529.
+    8  \def\depe{DP${\texttrademark}$} -> \def\depe{DP${\text{\texttrademark}}$}
 
 
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `e.4c' multiply defined.
 
-
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `is' multiply defined.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.aux: LaTeX Warning: Label `si4n' multiply defined.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.toc: Package Fancyhdr Warning: \headheight is too small (12.0pt): Make it at least 14.49998pt.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `math shift' on input line 282.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `\mathsurround' on input line 282.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `\z@' on input line 282.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `superscript' on input line 282.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:282: Package hyperref Warning: Token not allowed in a PDF string (PDFDocEncoding):(hyperref)                removing `math shift' on input line 282.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:517: LaTeX Warning: Command \texttrademark invalid in math mode on input line 517.
-/Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/tiniba-manual.tex:529: LaTeX Warning: Command \texttrademark invalid in math mode on input line 529.
 [no file]:577: LaTeX Warning: Command \texttrademark invalid in math mode on input line 577.
 /Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:110: LaTeX Warning: Citation `andersonPRB15' on page 31 undefined on input line 110.
 /Users/reinaldo/Documents/estudios/doctorado/tiniba-manual/chis.tex:115: LaTeX Warning: Citation `cabellosPRB09' on page 31 undefined on input line 115.
@@ -47,10 +55,3 @@
 (Log parsing issues. Disregard unless something else is wrong.)
 
 
-\label{u.2}
-\label{u.3}
-\label{u.691}
-\label{dim2}
-\label{e.4c}
-\label{is}
-\label{si4n}
